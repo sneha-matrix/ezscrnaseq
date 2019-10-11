@@ -8,6 +8,7 @@ library(edgeR)
 library(pheatmap)
 library(BiocParallel)
 library(splatter)
+library(rprojroot)
 library(testthat)
 options(stringsAsFactors = FALSE)
 
@@ -17,4 +18,5 @@ data("sc_example_counts")
 params <- splatEstimate(sc_example_counts)
 # Simulate data using estimated parameters
 sce <- splatSimulate(params, group.prob=c(0.5, 0.5), method="groups", verbose=FALSE)
+rownames(sce) <- readLines(is_rstudio_project$find_file("raw_data/ensembl_ids.txt"))
 rowData(sce)$Gene[1:10] <- paste0("MT-", rowData(sce)$Gene[1:10])

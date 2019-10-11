@@ -1,0 +1,20 @@
+library(ezlimma)
+library(knitr)
+library(SingleCellExperiment)
+library(scater)
+library(scran)
+library(Hmisc)
+library(edgeR)
+library(pheatmap)
+library(BiocParallel)
+library(splatter)
+library(testthat)
+options(stringsAsFactors = FALSE)
+
+set.seed(100)
+data("sc_example_counts")
+# Estimate parameters from example data
+params <- splatEstimate(sc_example_counts)
+# Simulate data using estimated parameters
+sce <- splatSimulate(params, group.prob=c(0.5, 0.5), method="groups", verbose=FALSE)
+rowData(sce)$Gene[1:10] <- paste0("MT-", rowData(sce)$Gene[1:10])

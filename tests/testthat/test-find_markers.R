@@ -11,9 +11,9 @@ test_that("clusters", {
 
   sce1 <- find_clusters(sce1, snn_k=5, plot=FALSE, verbose=FALSE)
 
-  clus_df <- find_markers(sce1, clusters=sce1$Cluster, annot=data.frame(rowData(sce1), row.names=rownames(sce1)), fdr_cutoff=Inf)
+  clus_df <- find_markers(sce1, clusters=sce1$Cluster, annot=data.frame(rowData(sce1), row.names=rownames(sce1)), fdr_cutoff=Inf, write=FALSE)
   expect_equal(rownames(clus_df)[1:3], c("ENSG00000268181", "ENSG00000182583", "ENSG00000207065"))
 
-  clus_df <- find_markers(sce1, clusters=sce1$Cluster, annot=data.frame(rowData(sce1), row.names=rownames(sce1)), fdr_cutoff=Inf, pval.type="all")
+  clus_df <- find_markers(sce1, clusters=sce1$Cluster, annot=data.frame(rowData(sce1), row.names=rownames(sce1)), fdr_cutoff=Inf, pval.type="all", write=FALSE)
   expect_equal(rownames(clus_df)[1:3], c("ENSG00000268181", "ENSG00000182583", "ENSG00000207065"))
 })

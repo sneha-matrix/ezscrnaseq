@@ -6,6 +6,7 @@
 #' @param sym_col The column name for the gene symbols in \code{rowData(sce)}.
 #' @param by_nmads: TRUE/FASLE for using number of median absolute deviation as thresholds.
 #' @param thresholds: Numbers of median absolute deviation if \code{by_nmads} is TRUE, otherwise the actual counts or percentages.
+#' @param ncores Number of cores.
 #' @param prefix Prefix for file name for the QC metrics histograms.
 #' @param plot TRUE/FASLE for whether plot the QC metrics histograms.
 #' @param write TRUE/FASLE for whether write the table of filtered cells.
@@ -13,13 +14,18 @@
 #' @return A SingleCellExperiment object.
 #' @export
 
-qc_metrics <- function(sce, sym_col="symbol", by_nmads=TRUE, thresholds=c(3,3,3), prefix=NULL, plot=TRUE, write=TRUE, verbose=TRUE){
+qc_metrics <- function(sce, sym_col="symbol", by_nmads=TRUE, thresholds=c(3,3,3), ncores=1, prefix=NULL, plot=TRUE, write=TRUE, verbose=TRUE){
 
   # specifying the mitochodial genes
   is.mito <- grepl("^(M|m)(T|t)-", rowData(sce)[, sym_col])
   n_mito <- sum(is.mito)
   if (verbose) cat("Number of mitochondrial genes:", n_mito, "\n")
-  sce <- calculateQCMetrics(sce, feature_controls=list(Mt=is.mito))
+
+  cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
+  bp <- SnowParam(workers=ncores, type=cl_type)
+  register(bpstart(bp))
+  sce <- calculateQCMetrics(sce, feature_controls=list(Mt=is.mito), BPPARAM=bp)
+  bpstop(bp)
 
   # qc calculation
   if (by_nmads) {

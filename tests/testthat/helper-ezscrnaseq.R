@@ -14,8 +14,10 @@ options(stringsAsFactors = FALSE)
 
 set.seed(100)
 data("sc_example_counts")
+sc_example_counts_shift <- sc_example_counts
+sc_example_counts_shift[] <- sample(c(rep(0, 10), 1:10), size=nrow(sc_example_counts)*ncol(sc_example_counts), replace=TRUE)
 # Estimate parameters from example data
-params <- splatEstimate(sc_example_counts)
+params <- splatEstimate(cbind(sc_example_counts, sc_example_counts_shift+sc_example_counts))
 # Simulate data using estimated parameters
 sce <- splatSimulate(params, group.prob=c(0.5, 0.5), method="groups", verbose=FALSE)
 rownames(sce) <- readLines(is_rstudio_project$find_file("raw_data/ensembl_ids.txt"))

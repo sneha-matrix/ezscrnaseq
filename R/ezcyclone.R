@@ -4,7 +4,6 @@
 #'
 #' @param organism hsa or mmu for human or mouse genes.
 #' @param gene.names Ensembl gene IDs for genes in \code{sce}.
-#' @param ncores Number of cores.
 #' @param seed Random seed.
 #' @inheritParams qc_metrics
 #' @inheritParams scran::cyclone

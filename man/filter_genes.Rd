@@ -4,7 +4,7 @@
 \alias{filter_genes}
 \title{Filter genes base on avarage counts}
 \usage{
-filter_genes(sce, cutoff = 0, use_size_factors = FALSE,
+filter_genes(sce, cutoff = 0, use_size_factors = FALSE, ncores = 1,
   prefix = NULL, plot = TRUE, write = TRUE, verbose = TRUE)
 }
 \arguments{
@@ -13,6 +13,8 @@ filter_genes(sce, cutoff = 0, use_size_factors = FALSE,
 \item{cutoff}{The cutoff of avarage counts for filtering.}
 
 \item{use_size_factors}{a logical scalar specifying whetherthe size factors in \code{object} should be used to construct effective library sizes.}
+
+\item{ncores}{Number of cores.}
 
 \item{prefix}{Prefix for file name for the QC metrics histograms.}
 

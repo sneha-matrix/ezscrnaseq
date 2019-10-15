@@ -8,9 +8,14 @@
 #' @return A SingleCellExperiment object.
 #' @export
 
-filter_genes <- function(sce, cutoff=0, use_size_factors=FALSE, prefix=NULL, plot=TRUE, write=TRUE, verbose=TRUE){
+filter_genes <- function(sce, cutoff=0, use_size_factors=FALSE, ncores=1, prefix=NULL, plot=TRUE, write=TRUE, verbose=TRUE){
 
-  rowData(sce)$ave.count <- calcAverage(sce, use_size_factors=use_size_factors)
+  cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
+  bp <- SnowParam(workers=ncores, type=cl_type)
+  register(bpstart(bp))
+  rowData(sce)$ave.count <- calcAverage(sce, use_size_factors=use_size_factors, BPPARAM=bp)
+  bpstop(bp)
+
   keep <- rowData(sce)$ave.count > cutoff
   n_keep <- sum(keep)
   if (verbose) cat("\nNumber of genes kept:", n_keep, "\n")

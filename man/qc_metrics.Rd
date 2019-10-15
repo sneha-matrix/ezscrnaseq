@@ -5,13 +5,15 @@
 \title{Quality control on the cells}
 \usage{
 qc_metrics(sce, sym_col = "symbol", by_nmads = TRUE,
-  thresholds = c(3, 3, 3), prefix = NULL, plot = TRUE,
+  thresholds = c(3, 3, 3), ncores = 1, prefix = NULL, plot = TRUE,
   write = TRUE, verbose = TRUE)
 }
 \arguments{
 \item{sce}{A SingleCellExperiment object containing expression values, usually counts.}
 
 \item{sym_col}{The column name for the gene symbols in \code{rowData(sce)}.}
+
+\item{ncores}{Number of cores.}
 
 \item{prefix}{Prefix for file name for the QC metrics histograms.}
 

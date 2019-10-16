@@ -13,7 +13,7 @@
 #' @return A SingleCellExperiment object with cell cluster information.
 #' @export
 
-find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=2, method="walktrap", steps=4, spins=25, min_member=20, prefix=NULL,
+find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, method="walktrap", steps=4, spins=25, min_member=20, prefix=NULL,
                           plot=TRUE, verbose=TRUE){
 
   set.seed(seed)

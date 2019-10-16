@@ -12,11 +12,15 @@
 #' @param write TRUE/FASLE for whether write the table of filtered cells.
 #' @param verbose TRUE/FASLE for specifying whether diagnostics should be printed to screen.
 #' @import knitr
+#' @import SummarizedExperiment
 #' @import SingleCellExperiment
 #' @import scater
 #' @import scran
 #' @import Hmisc
 #' @import BiocParallel
+#' @import edgeR
+#' @import pheatmap
+#' @import ezlimma
 #' @return A SingleCellExperiment object.
 #' @export
 

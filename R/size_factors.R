@@ -7,11 +7,6 @@
 #' @inheritParams qc_metrics
 #' @inheritParams scran::quickCluster
 #' @inheritParams scran::computeSumFactors
-#' @import knitr
-#' @import SingleCellExperiment
-#' @import scater
-#' @import scran
-#' @import BiocParallel
 #' @return A SingleCellExperiment object with size factors.
 #' @export
 

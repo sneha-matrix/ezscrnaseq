@@ -6,10 +6,6 @@
 #' @param fdr_cutoff FDR cutoff for top marker genes
 #' @inheritParams qc_metrics
 #' @inheritParams scran::findMarkers
-#' @import SingleCellExperiment
-#' @import scater
-#' @import scran
-#' @import BiocParallel
 #' @return A data.frame for the statistics and annotation of top marker geness
 #' @export
 

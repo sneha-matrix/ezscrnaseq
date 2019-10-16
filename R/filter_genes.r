@@ -5,10 +5,6 @@
 #' @param cutoff The cutoff of avarage counts for filtering.
 #' @inheritParams qc_metrics
 #' @inheritParams scater::calcAverage
-#' @import SingleCellExperiment
-#' @import scater
-#' @import scran
-#' @import BiocParallel
 #' @return A SingleCellExperiment object.
 #' @export
 

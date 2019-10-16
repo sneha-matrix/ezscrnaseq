@@ -11,6 +11,15 @@
 #' @param plot TRUE/FASLE for whether plot the QC metrics histograms.
 #' @param write TRUE/FASLE for whether write the table of filtered cells.
 #' @param verbose TRUE/FASLE for specifying whether diagnostics should be printed to screen.
+#' @import knitr
+#' @import SingleCellExperiment
+#' @import scater
+#' @import scran
+#' @import Hmisc
+#' @import edgeR
+#' @import pheatmap
+#' @import BiocParallel
+#' @import ezlimma
 #' @return A SingleCellExperiment object.
 #' @export
 

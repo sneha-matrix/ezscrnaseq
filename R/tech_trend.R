@@ -7,6 +7,10 @@
 #' @inheritParams scran::trendVar
 #' @inheritParams scran::decomposeVar
 #' @inheritParams stats::loess
+#' @import SingleCellExperiment
+#' @import scater
+#' @import scran
+#' @import BiocParallel
 #' @return A function accepting a mean log-expression as input and returning the variance of the log-expression as the output
 #' @export
 

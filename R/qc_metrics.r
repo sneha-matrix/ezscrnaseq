@@ -16,10 +16,7 @@
 #' @import scater
 #' @import scran
 #' @import Hmisc
-#' @import edgeR
-#' @import pheatmap
 #' @import BiocParallel
-#' @import ezlimma
 #' @return A SingleCellExperiment object.
 #' @export
 

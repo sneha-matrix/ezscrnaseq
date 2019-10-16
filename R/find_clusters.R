@@ -10,6 +10,11 @@
 #' @inheritParams scran::buildSNNGraph
 #' @inheritParams igraph::cluster_walktrap
 #' @inheritParams igraph::cluster_spinglass
+#' @import SingleCellExperiment
+#' @import scater
+#' @import scran
+#' @import BiocParallel
+#' @import pheatmap
 #' @return A SingleCellExperiment object with cell cluster information.
 #' @export
 

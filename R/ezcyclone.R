@@ -7,6 +7,10 @@
 #' @param seed Random seed.
 #' @inheritParams qc_metrics
 #' @inheritParams scran::cyclone
+#' @import SingleCellExperiment
+#' @import scater
+#' @import scran
+#' @import BiocParallel
 #' @return A list containing phases, scores, and normalized.scores .
 #' @export
 

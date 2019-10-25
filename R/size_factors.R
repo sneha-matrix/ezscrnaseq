@@ -44,17 +44,17 @@ size_factors <- function(sce, min.size=200, max.size=3000, min.mean=0.1, group.c
 
     if (is.null(sce$total_counts)) stop("Total counts are not calculated yet.")
 
-    pdf(paste(c(prefix, "size_factor_scatter.pdf"), collapse="_"))
-    on.exit(dev.off())
+    grDevices::pdf(paste(c(prefix, "size_factor_scatter.pdf"), collapse="_"))
+    on.exit(grDevices::dev.off())
 
     if(!is.null(group.col)){
-      plot(sizeFactors(sce), sce$total_counts/1e3, log="xy", ylab="Library size (thousands)", xlab="Size factor", main="Size factors from deconvolution",
-           col=alpha(as.numeric(as.factor(colData(sce)[, group.col]))+1, 0.3), pch=16)
+      graphics::plot(sizeFactors(sce), sce$total_counts/1e3, log="xy", ylab="Library size (thousands)", xlab="Size factor", main="Size factors from deconvolution",
+           col=scales::alpha(as.numeric(as.factor(colData(sce)[, group.col]))+1, 0.3), pch=16)
       legd <- sort(unique(colData(sce)[, group.col]))
-      legend("topleft", col=2:(length(legd)+1), pch=16, cex=1.2, legend=legd)
+      graphics::legend("topleft", col=2:(length(legd)+1), pch=16, cex=1.2, legend=legd)
     }else{
-      plot(sizeFactors(sce), sce$total_counts/1e3, log="xy", ylab="Library size (thousands)", xlab="Size factor", main="Size factors from deconvolution",
-           col=alpha(1, 0.3), pch=16)
+      graphics::plot(sizeFactors(sce), sce$total_counts/1e3, log="xy", ylab="Library size (thousands)", xlab="Size factor", main="Size factors from deconvolution",
+           col=scales::alpha(1, 0.3), pch=16)
     }
   }
 

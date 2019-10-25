@@ -21,15 +21,15 @@ filter_genes <- function(sce, cutoff=0, use_size_factors=FALSE, ncores=1, prefix
   if (verbose) cat("\nNumber of genes kept:", n_keep, "\n")
 
   if (plot){
-    pdf(paste(c(prefix, "average_counts.pdf"), collapse="_"))
-    on.exit(dev.off())
+    grDevices::pdf(paste(c(prefix, "average_counts.pdf"), collapse="_"))
+    on.exit(grDevices::dev.off())
 
-    hist(log10(rowData(sce)$ave.count), breaks=100, main="", col="grey", xlab=expression(Log[10]~"average count"))
-    if (cutoff > min(rowData(sce)$ave.count)) abline(v=log10(cutoff), lty=2)
+    graphics::hist(log10(rowData(sce)$ave.count), breaks=100, main="", col="grey", xlab=expression(Log[10]~"average count"))
+    if (cutoff > min(rowData(sce)$ave.count)) graphics::abline(v=log10(cutoff), lty=2)
   }
 
   g2k <- as.data.frame(table(keep))
-  if (write) write.csv(g2k, paste(c(prefix, "genes_to_keep.csv"), collapse="_"), row.names=FALSE)
+  if (write) utils::write.csv(g2k, paste(c(prefix, "genes_to_keep.csv"), collapse="_"), row.names=FALSE)
 
   sce <- sce[keep, ]
   return(sce)

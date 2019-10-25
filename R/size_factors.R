@@ -1,6 +1,6 @@
 #' Calculate deconvolving size factors from cell pools
 #'
-#' Calculate deconvolving size factors from cell pools using \pkg{ scran} \code{computeSumFactors}
+#' Calculate deconvolving size factors from cell pools using \pkg{scran} \code{computeSumFactors}
 #'
 #' @param group.col column name of the grouping variable on the samples in colData(sce).
 #' @param seed Random seed.

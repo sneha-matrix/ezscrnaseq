@@ -1,6 +1,7 @@
 #' Find cell clusters
 #'
 #' Find cell clusterd using \pkg{igraph}.
+#'
 #' @param use_dimred A string specifying whether existing values in \code{reducedDims(sce)} should be used.
 #' @param seed Random seed.
 #' @param snn_k The number of nearest neighbors to consider during graph construction.

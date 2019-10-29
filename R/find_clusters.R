@@ -2,9 +2,10 @@
 #'
 #' Find cell clusterd using \pkg{igraph}.
 #'
+#' @param use_dimred A string specifying whether existing values in \code{reducedDims(sce)} should be used.
 #' @param seed Random seed.
 #' @param snn_k The number of nearest neighbors to consider during graph construction.
-#' @param "walktrap" or "spinglass" for finding communities in graphs via short random walks or a spin-glass model and simulated annealing.
+#' @param method "walktrap" or "spinglass" for finding communities in graphs via short random walks or a spin-glass model and simulated annealing.
 #' @param min_member Minimal number of cluster members.
 #' @inheritParams qc_metrics
 #' @inheritParams scran::buildSNNGraph

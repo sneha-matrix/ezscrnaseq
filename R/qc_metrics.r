@@ -4,8 +4,8 @@
 #'
 #' @param sce A SingleCellExperiment object containing expression values, usually counts.
 #' @param sym_col The column name for the gene symbols in \code{rowData(sce)}.
-#' @param by_nmads: TRUE/FASLE for using number of median absolute deviation as thresholds.
-#' @param thresholds: Numbers of median absolute deviation if \code{by_nmads} is TRUE, otherwise the actual counts or percentages.
+#' @param by_nmads TRUE/FASLE for using number of median absolute deviation as thresholds.
+#' @param thresholds Numbers of median absolute deviation if \code{by_nmads} is TRUE, otherwise the actual counts or percentages.
 #' @param ncores Number of cores.
 #' @param prefix Prefix for file name for the QC metrics histograms.
 #' @param plot TRUE/FASLE for whether plot the QC metrics histograms.
@@ -18,9 +18,7 @@
 #' @import scran
 #' @import Hmisc
 #' @import BiocParallel
-#' @import edgeR
 #' @import pheatmap
-#' @import ezlimma
 #' @return A SingleCellExperiment object.
 #' @export
 

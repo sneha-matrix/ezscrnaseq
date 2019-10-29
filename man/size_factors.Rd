@@ -36,5 +36,5 @@ Disabled by setting to \code{NULL}.}
 A SingleCellExperiment object with size factors.
 }
 \description{
-Calculate deconvolving size factors from cell pools using \pkg{ scran} \code{computeSumFactors}
+Calculate deconvolving size factors from cell pools using \pkg{scran} \code{computeSumFactors}
 }

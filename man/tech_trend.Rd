@@ -22,6 +22,8 @@ If zero, a Poisson distribution is used.}
 \item{design}{A numeric matrix describing the uninteresting factors contributing to expression in each cell.
 Alternatively, a single factor can be supplied for one-way layouts.}
 
+\item{assay_type}{A string specifying which assay values to use, e.g., "counts" or "logcounts".}
+
 \item{ncores}{Number of cores.}
 
 \item{prefix}{Prefix for file name for the QC metrics histograms.}

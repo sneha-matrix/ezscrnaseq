@@ -13,6 +13,10 @@ qc_metrics(sce, sym_col = "symbol", by_nmads = TRUE,
 
 \item{sym_col}{The column name for the gene symbols in \code{rowData(sce)}.}
 
+\item{by_nmads}{TRUE/FASLE for using number of median absolute deviation as thresholds.}
+
+\item{thresholds}{Numbers of median absolute deviation if \code{by_nmads} is TRUE, otherwise the actual counts or percentages.}
+
 \item{ncores}{Number of cores.}
 
 \item{prefix}{Prefix for file name for the QC metrics histograms.}
@@ -22,10 +26,6 @@ qc_metrics(sce, sym_col = "symbol", by_nmads = TRUE,
 \item{write}{TRUE/FASLE for whether write the table of filtered cells.}
 
 \item{verbose}{TRUE/FASLE for specifying whether diagnostics should be printed to screen.}
-
-\item{by_nmads:}{TRUE/FASLE for using number of median absolute deviation as thresholds.}
-
-\item{thresholds:}{Numbers of median absolute deviation if \code{by_nmads} is TRUE, otherwise the actual counts or percentages.}
 }
 \value{
 A SingleCellExperiment object.

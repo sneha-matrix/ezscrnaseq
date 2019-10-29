@@ -3,6 +3,7 @@
 #' Find marker genes for cell clusters using \pkg{scran} \code{findMarkers}
 #'
 #' @param annot gene annotation
+#' @param assay_type A string specifying which assay values to use, e.g., "counts" or "logcounts".
 #' @param fdr_cutoff FDR cutoff for top marker genes
 #' @inheritParams qc_metrics
 #' @inheritParams scran::findMarkers

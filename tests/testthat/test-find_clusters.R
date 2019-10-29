@@ -2,7 +2,7 @@ context("find_clusters")
 
 test_that("ncores=2", {
   sce1 <- filter_genes(sce, cutoff=0, ncores=2, plot=FALSE, write=FALSE, verbose=FALSE)
-  expect_warning(sce1 <- size_factors(sce1, min.size=5, min.mean=0, ncores=2,plot=FALSE, verbose=FALSE))
+  expect_warning(sce1 <- size_factors(sce1, min.size=5, min.mean=0, ncores=2, plot=FALSE, verbose=FALSE))
 
   sce1 <- scater::normalize(sce1)
   trend <- tech_trend(sce1, ncores=2, plot=FALSE)

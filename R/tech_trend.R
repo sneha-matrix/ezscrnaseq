@@ -2,6 +2,7 @@
 #'
 #' Make a technical trend using \pkg{scran} \code{makeTechTrend} and decompose the gene-level variance using \pkg{scran} \code{decomposeVar}.
 #'
+#' @param assay_type A string specifying which assay values to use, e.g., "counts" or "logcounts".
 #' @inheritParams qc_metrics
 #' @inheritParams scran::makeTechTrend
 #' @inheritParams scran::trendVar
@@ -24,13 +25,13 @@ tech_trend <- function(sce, dispersion=0, span=0.4, block=NA, design=NA, assay_t
   bpstop(bp)
 
   if (plot){
-    pdf(paste(c(prefix, "mean_variance_trend.pdf"), collapse="_"))
-    on.exit(dev.off())
+    grDevices::pdf(paste(c(prefix, "mean_variance_trend.pdf"), collapse="_"))
+    on.exit(grDevices::dev.off())
 
-    plot(var_out$mean, var_out$total, pch=16, cex=0.6, xlab="Mean log-expression", ylab="Variance of log-expression")
-    curve(var_fit_trend(x), col="dodgerblue", add=TRUE, lwd=2)
-    curve(var_fit$trend(x), col="red", add=TRUE, lwd=2)
-    legend("topright", legend=c("Technical noise", "All variance"), lty=1, lwd=2, col=c("dodgerblue", "red"))
+    graphics::plot(var_out$mean, var_out$total, pch=16, cex=0.6, xlab="Mean log-expression", ylab="Variance of log-expression")
+    graphics::curve(var_fit_trend(var_out$mean), col="dodgerblue", add=TRUE, lwd=2)
+    graphics::curve(var_fit$trend(var_out$mean), col="red", add=TRUE, lwd=2)
+    graphics::legend("topright", legend=c("Technical noise", "All variance"), lty=1, lwd=2, col=c("dodgerblue", "red"))
   }
 
   return(var_fit_trend)

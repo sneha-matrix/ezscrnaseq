@@ -5,17 +5,21 @@
 \title{Find cell clusters}
 \usage{
 find_clusters(sce, use_dimred = "PCA", seed = 100, snn_k = 10,
-  ncores = 2, method = "walktrap", steps = 4, spins = 25,
+  ncores = 1, method = "walktrap", steps = 4, spins = 25,
   min_member = 20, prefix = NULL, plot = TRUE, verbose = TRUE)
 }
 \arguments{
 \item{sce}{A SingleCellExperiment object containing expression values, usually counts.}
+
+\item{use_dimred}{A string specifying whether existing values in \code{reducedDims(sce)} should be used.}
 
 \item{seed}{Random seed.}
 
 \item{snn_k}{The number of nearest neighbors to consider during graph construction.}
 
 \item{ncores}{Number of cores.}
+
+\item{method}{"walktrap" or "spinglass" for finding communities in graphs via short random walks or a spin-glass model and simulated annealing.}
 
 \item{steps}{The length of the random walks to perform.}
 
@@ -31,8 +35,6 @@ unpopulated.}
 \item{plot}{TRUE/FASLE for whether plot the QC metrics histograms.}
 
 \item{verbose}{TRUE/FASLE for specifying whether diagnostics should be printed to screen.}
-
-\item{"walktrap"}{or "spinglass" for finding communities in graphs via short random walks or a spin-glass model and simulated annealing.}
 }
 \value{
 A SingleCellExperiment object with cell cluster information.

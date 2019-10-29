@@ -26,6 +26,8 @@ find_markers(sce, clusters, annot, block = NULL, design = NULL,
 
 \item{direction}{A string specifying the direction of log-fold changes to be considered for each cluster.}
 
+\item{assay_type}{A string specifying which assay values to use, e.g., "counts" or "logcounts".}
+
 \item{ncores}{Number of cores.}
 
 \item{fdr_cutoff}{FDR cutoff for top marker genes}

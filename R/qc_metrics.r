@@ -72,29 +72,29 @@ qc_metrics <- function(sce, sym_col="symbol", by_nmads=TRUE, thresholds=c(3,3,3)
     print(kable(cutoff))
   }
 
-  if (write) write.csv(qc, paste(c(prefix, "filtered_cells.csv"), collapse="_"), row.names=FALSE)
+  if (write) utils::write.csv(qc, paste(c(prefix, "filtered_cells.csv"), collapse="_"), row.names=FALSE)
 
   # qc metric
   if (plot){
     if (n_mito > 0){
-      pdf(paste(c(prefix,"qc_metrics_hist.pdf"), collapse="_"), 9, 3)
-      par(mfrow=c(1,3), mar=c(5.1, 4.1, 1.1, 0.1), oma=c(0, 0, 2, 0))
+      grDevices::pdf(paste(c(prefix,"qc_metrics_hist.pdf"), collapse="_"), 9, 3)
+      graphics::par(mfrow=c(1,3), mar=c(5.1, 4.1, 1.1, 0.1), oma=c(0, 0, 2, 0))
 
     } else{
-      pdf(paste(c(prefix,"qc_metrics_hist.pdf"), collapse="_"), 6, 3)
-      par(mfrow=c(1,2), mar=c(5.1, 4.1, 1.1, 0.1), oma=c(0, 0, 2, 0))
+      grDevices::pdf(paste(c(prefix,"qc_metrics_hist.pdf"), collapse="_"), 6, 3)
+      graphics::par(mfrow=c(1,2), mar=c(5.1, 4.1, 1.1, 0.1), oma=c(0, 0, 2, 0))
     }
-    on.exit(dev.off())
+    on.exit(grDevices::dev.off())
 
-    hist(sce$total_counts/1e3, xlab="Library sizes (thousands)", main="", breaks=30, col="grey80", ylab="Number of cells")
-    abline(v=cutoff$LibSize[1]/1e3, lty=2)
+    graphics::hist(sce$total_counts/1e3, xlab="Library sizes (thousands)", main="", breaks=30, col="grey80", ylab="Number of cells")
+    graphics::abline(v=cutoff$LibSize[1]/1e3, lty=2)
 
-    hist(sce$total_features_by_counts, xlab="Number of expressed genes", main="", breaks=30, col="grey80", ylab="Number of cells")
-    abline(v=cutoff$Feature[1], lty=2)
+    graphics::hist(sce$total_features_by_counts, xlab="Number of expressed genes", main="", breaks=30, col="grey80", ylab="Number of cells")
+    graphics::abline(v=cutoff$Feature[1], lty=2)
 
     if (n_mito >0){
-      hist(sce$pct_counts_Mt, xlab="Mitochondrial proportion (%)", main="", breaks=30, col="grey80",  ylab="Number of cells")
-      abline(v=cutoff$Mito[1], lty=2)
+      graphics::hist(sce$pct_counts_Mt, xlab="Mitochondrial proportion (%)", main="", breaks=30, col="grey80",  ylab="Number of cells")
+      graphics::abline(v=cutoff$Mito[1], lty=2)
     }
     mtitle("Histograms of QC Metrics", cex.m=1.2)
   }

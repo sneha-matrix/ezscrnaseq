@@ -34,7 +34,7 @@ find_markers <- function(sce, clusters, annot, block=NULL, design=NULL, pval.typ
   marker_sets <- ezlimma::df_signif(marker_sets, 3)
   marker_sets <- data.frame(marker_sets, annot[marker_sets$ID, ])
 
-  if (write) write.csv(marker_sets, paste0(paste(c(prefix, "clusters_top_markers", suffix), collapse="_"), ".csv"), na="", row.names=FALSE)
+  if (write) utils::write.csv(marker_sets, paste0(paste(c(prefix, "clusters_top_markers", suffix), collapse="_"), ".csv"), na="", row.names=FALSE)
 
   return(marker_sets)
 }

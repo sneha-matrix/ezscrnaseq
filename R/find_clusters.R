@@ -53,9 +53,9 @@ find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, m
   ratio <- log2(mod_out$observed / mod_out$expected + 1)
 
   if (plot){
-    pdf(paste(c(prefix, "clusters_total_weights.pdf"), collapse="_"))
-    on.exit(dev.off())
-    pheatmap(ratio, scale="none", cluster_rows=FALSE, cluster_cols=FALSE, color=colorRampPalette(c("white", "blue"))(100))
+    grDevices::pdf(paste(c(prefix, "clusters_total_weights.pdf"), collapse="_"))
+    on.exit(grDevices::dev.off())
+    pheatmap(ratio, scale="none", cluster_rows=FALSE, cluster_cols=FALSE, color=grDevices::colorRampPalette(c("white", "blue"))(100))
   }
 
   # rm small clusters

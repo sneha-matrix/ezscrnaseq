@@ -1,6 +1,6 @@
 Package: ezscrnaseq
 Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: 
     person(given = "First",
            family = "Last",
@@ -24,11 +24,11 @@ Imports:
     scales,
     stats
 Suggests: 
-    testthat,
     devtools,
+	ezlimma,
+	rprojroot,
     splatter,
-    rprojroot,
-    ezlimma
+	testthat
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 VignetteBuilder: knitr

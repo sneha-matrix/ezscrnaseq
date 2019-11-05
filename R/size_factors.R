@@ -16,7 +16,7 @@ size_factors <- function(sce, min.size=200, max.size=3000, min.mean=0.1, group.c
   bp <- SnowParam(workers=ncores, type=cl_type)
   register(bpstart(bp))
 
-  set.seed(seed)
+  suppressWarnings(set.seed(seed = 100, sample.kind = "Rounding"))
   clusters <- quickCluster(sce, min.size=min.size, max.size=max.size, min.mean=min.mean, method=method, BPPARAM=bp)
 
   if (verbose){

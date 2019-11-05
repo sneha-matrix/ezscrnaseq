@@ -17,7 +17,7 @@
 find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, method="walktrap", steps=4, spins=25, min_member=20, prefix=NULL,
                           plot=TRUE, verbose=TRUE){
 
-  set.seed(seed)
+  suppressWarnings(set.seed(seed = 100, sample.kind = "Rounding"))
 
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
   bp <- SnowParam(workers=ncores, type=cl_type)
@@ -29,10 +29,8 @@ find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, m
   # cluster
   if(method=="walktrap"){
     cluster_out <- igraph::cluster_walktrap(snn_gr, steps=steps)
-
   } else if(method=="spinglass"){
     cluster_out <- igraph::cluster_spinglass(snn_gr, spins=spins)
-
   }
 
   sce$Cluster <- factor(cluster_out$membership)

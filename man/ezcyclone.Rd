@@ -28,7 +28,7 @@ ezcyclone(sce, organism = "hsa", gene.names = rownames(sce),
 \item{verbose}{TRUE/FASLE for specifying whether diagnostics should be printed to screen.}
 }
 \value{
-A list containing phases, scores, and normalized.scores .
+A list containing phases, scores, and normalized.scores.
 }
 \description{
 Cell cycle phase classification using \pkg{scran} \code{cyclone}

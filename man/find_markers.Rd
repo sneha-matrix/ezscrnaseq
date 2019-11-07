@@ -5,32 +5,36 @@
 \title{Find marker genes for cell clusters}
 \usage{
 find_markers(sce, clusters, annot, block = NULL, design = NULL,
-  pval.type = "any", lfc = 1, direction = "up",
+  pval.type = "any", lfc = 1, test.type = "t", direction = "up",
   assay_type = "logcounts", ncores = 1, fdr_cutoff = 0.25,
   prefix = NULL, write = TRUE)
 }
 \arguments{
 \item{sce}{A SingleCellExperiment object containing expression values, usually counts.}
 
-\item{clusters}{A vector of cluster identities for all cells.}
+\item{clusters}{Vector specify cell clusters.}
 
-\item{annot}{gene annotation}
+\item{annot}{gene annotation.}
 
-\item{block}{A factor specifying the blocking level for each cell.}
+\item{block}{Vector specify blocking.}
 
-\item{design}{A numeric matrix containing blocking terms, i.e., uninteresting factors driving expression across cells.}
+\item{design}{Design matirx.}
 
-\item{pval.type}{A string specifying the type of combined p-value to be computed, i.e., Simes' or IUT.}
+\item{pval.type}{A string specifying how p-values are to be combined across pairwise comparisons for a given group/cluster.}
 
-\item{lfc}{A positive numeric scalar specifying the log-fold change threshold to be tested against.}
+\item{lfc}{Log fold-change.}
 
-\item{direction}{A string specifying the direction of log-fold changes to be considered for each cluster.}
+\item{test.type}{String specifying the type of pairwise test to perform -
+a t-test with \code{"t"}, a Wilcoxon rank sum test with \code{"wilcox"}, 
+or a binomial test with \code{"binom"}.}
+
+\item{direction}{Direction of change.}
 
 \item{assay_type}{A string specifying which assay values to use, e.g., "counts" or "logcounts".}
 
 \item{ncores}{Number of cores.}
 
-\item{fdr_cutoff}{FDR cutoff for top marker genes}
+\item{fdr_cutoff}{FDR cutoff for top marker genes.}
 
 \item{prefix}{Prefix for file name for the QC metrics histograms.}
 

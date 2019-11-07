@@ -20,7 +20,7 @@ tech_trend <- function(sce, dispersion=0, span=0.4, block=NA, design=NA, assay_t
   register(bpstart(bp))
   var_fit_trend <- makeTechTrend(dispersion=dispersion, x=sce, BPPARAM=bp)
 
-  var_fit <- trendVar(sce, parametric=TRUE, loess.args=list(span=span), use.spikes=FALSE, assay.type=assay_type)
+  var_fit <- trendVar(sce, parametric=FALSE, loess.args=list(span=span), use.spikes=FALSE, assay.type=assay_type)
   var_out <- decomposeVar(sce, fit=var_fit, block=block, design=design, assay.type=assay_type, BPPARAM=bp)
   bpstop(bp)
 

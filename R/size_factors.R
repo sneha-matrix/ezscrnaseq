@@ -3,6 +3,7 @@
 #' Calculate deconvolving size factors from cell pools using \pkg{ scran} \code{computeSumFactors}
 #'
 #' @param group.col column name of the grouping variable on the samples in colData(sce).
+#' @param max.size Maximum cluster size.
 #' @param seed Random seed.
 #' @inheritParams qc_metrics
 #' @inheritParams scran::quickCluster
@@ -10,14 +11,14 @@
 #' @return A SingleCellExperiment object with size factors.
 #' @export
 
-size_factors <- function(sce, min.size=200, max.size=3000, min.mean=0.1, group.col=NULL, method="igraph", seed=100, ncores=1, prefix=NULL, plot=TRUE, verbose=TRUE){
+size_factors <- function(sce, min.size=100, max.size=3000, min.mean=0.1, group.col=NULL, method="igraph", seed=100, ncores=1, prefix=NULL, plot=TRUE, verbose=TRUE){
 
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
   bp <- SnowParam(workers=ncores, type=cl_type)
   register(bpstart(bp))
 
   suppressWarnings(set.seed(seed = 100, sample.kind = "Rounding"))
-  clusters <- quickCluster(sce, min.size=min.size, max.size=max.size, min.mean=min.mean, method=method, BPPARAM=bp)
+  clusters <- quickCluster(sce, min.size=min.size, min.mean=min.mean, method=method, BPPARAM=bp)
 
   if (verbose){
     cat("\nNumber of cells in clusters:\n")

@@ -2,21 +2,27 @@
 #'
 #' Find marker genes for cell clusters using \pkg{scran} \code{findMarkers}
 #'
-#' @param annot gene annotation
+#' @param clusters Vector specify cell clusters.
+#' @param annot gene annotation.
+#' @param block Vector specify blocking.
+#' @param design Design matirx.
+#' @param lfc Log fold-change.
+#' @param direction Direction of change.
 #' @param assay_type A string specifying which assay values to use, e.g., "counts" or "logcounts".
-#' @param fdr_cutoff FDR cutoff for top marker genes
+#' @param fdr_cutoff FDR cutoff for top marker genes.
 #' @inheritParams qc_metrics
 #' @inheritParams scran::findMarkers
 #' @return A data.frame for the statistics and annotation of top marker geness
 #' @export
 
-find_markers <- function(sce, clusters, annot, block=NULL, design=NULL, pval.type="any", lfc=1, direction="up", assay_type="logcounts", ncores=1,
+find_markers <- function(sce, clusters, annot, block=NULL, design=NULL, pval.type="any", lfc=1, test.type="t", direction="up", assay_type="logcounts", ncores=1,
                          fdr_cutoff=0.25, prefix=NULL, write=TRUE){
 
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
   bp <- SnowParam(workers=ncores, type=cl_type)
   register(bpstart(bp))
-  markers <- findMarkers(sce, clusters=clusters, block=block, design=design, pval.type=pval.type, lfc=lfc, direction=direction, assay.type=assay_type, BPPARAM=bp)
+  markers <- findMarkers(sce, clusters=clusters, block=block, design=design, pval.type=pval.type, lfc=lfc, test.type=test.type, direction=direction,
+                         assay.type=assay_type, BPPARAM=bp)
   bpstop(bp)
 
   clus <- names(markers)

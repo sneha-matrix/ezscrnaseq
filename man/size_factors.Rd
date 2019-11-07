@@ -4,7 +4,7 @@
 \alias{size_factors}
 \title{Calculate deconvolving size factors from cell pools}
 \usage{
-size_factors(sce, min.size = 200, max.size = 3000, min.mean = 0.1,
+size_factors(sce, min.size = 100, max.size = 3000, min.mean = 0.1,
   group.col = NULL, method = "igraph", seed = 100, ncores = 1,
   prefix = NULL, plot = TRUE, verbose = TRUE)
 }
@@ -13,14 +13,15 @@ size_factors(sce, min.size = 200, max.size = 3000, min.mean = 0.1,
 
 \item{min.size}{An integer scalar specifying the minimum size of each cluster.}
 
-\item{max.size}{An integer scalar specifying the maximum size of each cluster.}
+\item{max.size}{Maximum cluster size.}
 
 \item{min.mean}{A numeric scalar specifying the filter to be applied on the average count for each filter prior to computing ranks.
-Disabled by setting to \code{NULL}.}
+Only used when \code{use.ranks=TRUE}, see \code{?\link{scaledColRanks}} for details.}
 
 \item{group.col}{column name of the grouping variable on the samples in colData(sce).}
 
-\item{method}{A string specifying the clustering method to use.}
+\item{method}{String specifying the clustering method to use.
+\code{"hclust"} uses hierarchical clustering while \code{"igraph"} uses graph-based clustering.}
 
 \item{seed}{Random seed.}
 
@@ -36,5 +37,5 @@ Disabled by setting to \code{NULL}.}
 A SingleCellExperiment object with size factors.
 }
 \description{
-Calculate deconvolving size factors from cell pools using \pkg{scran} \code{computeSumFactors}
+Calculate deconvolving size factors from cell pools using \pkg{ scran} \code{computeSumFactors}
 }

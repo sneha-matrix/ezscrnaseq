@@ -4,9 +4,17 @@
 \alias{tech_trend}
 \title{Make a technical trend & decompose the gene-level variance}
 \usage{
-tech_trend(sce, dispersion = 0, span = 0.4, block = NA,
-  design = NA, assay_type = "logcounts", ncores = 1, prefix = NULL,
-  plot = TRUE)
+tech_trend(
+  sce,
+  dispersion = 0,
+  span = 0.4,
+  block = NA,
+  design = NA,
+  assay_type = "logcounts",
+  ncores = 1,
+  prefix = NULL,
+  plot = TRUE
+)
 }
 \arguments{
 \item{sce}{A SingleCellExperiment object containing expression values, usually counts.}

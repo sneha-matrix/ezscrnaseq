@@ -4,10 +4,22 @@
 \alias{find_markers}
 \title{Find marker genes for cell clusters}
 \usage{
-find_markers(sce, clusters, annot, block = NULL, design = NULL,
-  pval.type = "any", lfc = 1, test.type = "t", direction = "up",
-  assay_type = "logcounts", ncores = 1, fdr_cutoff = 0.25,
-  prefix = NULL, write = TRUE)
+find_markers(
+  sce,
+  clusters,
+  annot,
+  block = NULL,
+  design = NULL,
+  pval.type = "any",
+  lfc = 1,
+  test.type = "t",
+  direction = "up",
+  assay_type = "logcounts",
+  ncores = 1,
+  fdr_cutoff = 0.25,
+  prefix = NULL,
+  write = TRUE
+)
 }
 \arguments{
 \item{sce}{A SingleCellExperiment object containing expression values, usually counts.}

@@ -4,9 +4,17 @@
 \alias{ezcyclone}
 \title{Cell cycle phase classification}
 \usage{
-ezcyclone(sce, organism = "hsa", gene.names = rownames(sce),
-  ncores = 1, seed = 100, iter = 1000, min.iter = 100,
-  min.pairs = 50, verbose = TRUE)
+ezcyclone(
+  sce,
+  organism = "hsa",
+  gene.names = rownames(sce),
+  ncores = 1,
+  seed = 100,
+  iter = 1000,
+  min.iter = 100,
+  min.pairs = 50,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{sce}{A SingleCellExperiment object containing expression values, usually counts.}

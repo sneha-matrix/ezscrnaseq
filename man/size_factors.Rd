@@ -4,9 +4,19 @@
 \alias{size_factors}
 \title{Calculate deconvolving size factors from cell pools}
 \usage{
-size_factors(sce, min.size = 100, max.size = 3000, min.mean = 0.1,
-  group.col = NULL, method = "igraph", seed = 100, ncores = 1,
-  prefix = NULL, plot = TRUE, verbose = TRUE)
+size_factors(
+  sce,
+  min.size = 100,
+  max.size = 3000,
+  min.mean = 0.1,
+  group.col = NULL,
+  method = "igraph",
+  seed = 100,
+  ncores = 1,
+  prefix = NULL,
+  plot = TRUE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{sce}{A SingleCellExperiment object containing expression values, usually counts.}
@@ -16,7 +26,7 @@ size_factors(sce, min.size = 100, max.size = 3000, min.mean = 0.1,
 \item{max.size}{Maximum cluster size.}
 
 \item{min.mean}{A numeric scalar specifying the filter to be applied on the average count for each filter prior to computing ranks.
-Only used when \code{use.ranks=TRUE}, see \code{?\link{scaledColRanks}} for details.}
+Only used when \code{use.ranks=TRUE}, see \code{?\link[scran]{scaledColRanks}} for details.}
 
 \item{group.col}{column name of the grouping variable on the samples in colData(sce).}
 

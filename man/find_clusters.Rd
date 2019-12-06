@@ -4,9 +4,20 @@
 \alias{find_clusters}
 \title{Find cell clusters}
 \usage{
-find_clusters(sce, use_dimred = "PCA", seed = 100, snn_k = 10,
-  ncores = 1, method = "walktrap", steps = 4, spins = 25,
-  min_member = 20, prefix = NULL, plot = TRUE, verbose = TRUE)
+find_clusters(
+  sce,
+  use_dimred = "PCA",
+  seed = 100,
+  snn_k = 10,
+  ncores = 1,
+  method = "walktrap",
+  steps = 4,
+  spins = 25,
+  min_member = 20,
+  prefix = NULL,
+  plot = TRUE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{sce}{A SingleCellExperiment object containing expression values, usually counts.}

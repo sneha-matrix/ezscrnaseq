@@ -48,13 +48,15 @@ size_factors <- function(sce, min.size=100, max.size=3000, min.mean=0.1, group.c
     on.exit(grDevices::dev.off())
 
     if (!is.null(group.col)){
+      cols <- as.numeric(as.factor(colData(sce)[, group.col]))+1
+      if(max(cols) > 8) stop("Group number can't be more than 8.")
       graphics::plot(sizeFactors(sce), sce$total_counts/1e3, log="xy", ylab="Library size (thousands)", xlab="Size factor", main="Size factors from deconvolution",
-           col=scales::alpha(as.numeric(as.factor(colData(sce)[, group.col]))+1, 0.3), pch=16)
+           col=scales::alpha(grDevices::palette()[cols], 0.3), pch=16)
       legd <- sort(unique(colData(sce)[, group.col]))
       graphics::legend("topleft", col=2:(length(legd)+1), pch=16, cex=1.2, legend=legd)
     } else {
       graphics::plot(sizeFactors(sce), sce$total_counts/1e3, log="xy", ylab="Library size (thousands)", xlab="Size factor", main="Size factors from deconvolution",
-           col= scales::alpha(1, 0.3), pch=16)
+           col= scales::alpha(grDevices::palette()[1], 0.3), pch=16)
     }
   }
   return(sce)

@@ -4,8 +4,16 @@
 \alias{filter_genes}
 \title{Filter genes base on avarage counts}
 \usage{
-filter_genes(sce, cutoff = 0, use_size_factors = FALSE, ncores = 1,
-  prefix = NULL, plot = TRUE, write = TRUE, verbose = TRUE)
+filter_genes(
+  sce,
+  cutoff = 0,
+  use_size_factors = FALSE,
+  ncores = 1,
+  prefix = NULL,
+  plot = TRUE,
+  write = TRUE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{sce}{A SingleCellExperiment object containing expression values, usually counts.}

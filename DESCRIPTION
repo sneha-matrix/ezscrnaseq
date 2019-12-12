@@ -19,6 +19,7 @@ Imports:
     scran,
     Hmisc,
     pheatmap,
+	BiocFileCache,
     BiocParallel,
     igraph,
     scales,

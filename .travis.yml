@@ -4,6 +4,7 @@ language: R
 cache: packages
 warnings_are_errors: false
 bioc_packages: 
+  - BiocFileCache
   - edgeR
   - limma
 r_github_packages: 

@@ -1,11 +1,11 @@
 # ezscrnaseq
 Functions for single cell RNA-seq analysis
 
-[![Build Status](https://travis-ci.org/jdreyf/ezscrnaseq.svg?branch=master)](https://travis-ci.org/jdreyf/ezscrnaseq)
-[![Coverage Status](https://img.shields.io/codecov/c/github/jdreyf/ezscrnaseq/master.svg)](https://codecov.io/github/jdreyf/ezscrnaseq?branch=master)
+[![Build Status](https://travis-ci.org/sneha-matrix/ezscrnaseq.svg?branch=master)](https://travis-ci.org/jdreyf/ezscrnaseq)
+[![Coverage Status](https://img.shields.io/codecov/c/github/sneha-matrix/ezscrnaseq/master.svg)](https://codecov.io/github/jdreyf/ezscrnaseq?branch=master)
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 ## Install
 library(remotes)  
 
-remotes::install_github(repo="huipan1973/ezscrnaseq", build_opts = c("--no-resave-data", "--no-manual"))
+remotes::install_github(repo="sneha-matrix/ezscrnaseq", build_opts = c("--no-resave-data", "--no-manual"))

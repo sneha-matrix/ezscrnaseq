@@ -42,5 +42,5 @@ Alternatively, a single factor can be supplied for one-way layouts.}
 A function accepting a mean log-expression as input and returning the variance of the log-expression as the output
 }
 \description{
-Make a technical trend using \pkg{scran} \code{makeTechTrend} and decompose the gene-level variance using \pkg{scran} \code{decomposeVar}.
+Make a technical trend using \pkg{scran} \code{makeTechTrend} and decompose the gene-level variance using \pkg{scran} \code{modelGeneVar}.
 }

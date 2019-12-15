@@ -16,9 +16,9 @@ test_that("not_by_nmads", {
 })
 
 test_that("large_nmads", {
-  expect_error(sce1 <- qc_metrics(sce, sym_col="Gene", by_nmads=TRUE, thresholds=c(10,3,3), plot=FALSE, write=FALSE, verbose=FALSE))
+  expect_warning(expect_error(sce1 <- qc_metrics(sce, sym_col="Gene", by_nmads=TRUE, thresholds=c(10,3,3), plot=FALSE, write=FALSE, verbose=FALSE)))
 })
 
 test_that("small counts", {
-  expect_error(sce1 <- qc_metrics(sce, sym_col="Gene", by_nmads=FALSE, thresholds=c(9,600,20), plot=FALSE, write=FALSE, verbose=FALSE))
+  expect_warning(expect_error(sce1 <- qc_metrics(sce, sym_col="Gene", by_nmads=FALSE, thresholds=c(9,600,20), plot=FALSE, write=FALSE, verbose=FALSE)))
 })

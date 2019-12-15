@@ -2,6 +2,8 @@
 #'
 #' Cell cycle pairs creation using \pkg{scran} \code{sandbag}
 #'
+#' @param sce A numeric matrix-like object of gene expression values where rows are genes and columns are cells.
+#' Alternatively, a SingleCellExperiment object containing such a matrix.
 #' @param genes.list Ensembl gene IDs for genes in \code{sce}.
 #' @param G1 vector of column number having G1 genes expression
 #' @param S vector of column number having S genes expression

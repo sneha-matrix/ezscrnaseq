@@ -7,6 +7,9 @@
 find_pairs(sce, genes.list = genes.list, G1 = G1, S = S, G2M = G2M)
 }
 \arguments{
+\item{sce}{A numeric matrix-like object of gene expression values where rows are genes and columns are cells.
+Alternatively, a SingleCellExperiment object containing such a matrix.}
+
 \item{genes.list}{Ensembl gene IDs for genes in \code{sce}.}
 
 \item{G1}{vector of column number having G1 genes expression}

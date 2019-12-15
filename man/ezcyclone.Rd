@@ -8,6 +8,7 @@ ezcyclone(
   sce,
   organism = "hsa",
   gene.names = rownames(sce),
+  pairs = NULL,
   ncores = 1,
   seed = 100,
   iter = 1000,
@@ -19,9 +20,11 @@ ezcyclone(
 \arguments{
 \item{sce}{A SingleCellExperiment object containing expression values, usually counts.}
 
-\item{organism}{hsa or mmu for human or mouse genes.}
+\item{organism}{hsa or mmu for human or mouse genes pre-trained marker sets.}
 
 \item{gene.names}{Ensembl gene IDs for genes in \code{sce}.}
+
+\item{pairs, }{pair information for training marker sets. If set to NULL uses pre-trained marker sets}
 
 \item{ncores}{Number of cores.}
 

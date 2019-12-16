@@ -4,19 +4,19 @@
 \alias{find_pairs}
 \title{Cell cycle training step of the pair-based prediction}
 \usage{
-find_pairs(sce, genes.list = genes.list, G1 = G1, S = S, G2M = G2M)
+find_pairs(sce, G1, S, G2M, genes.list = NULL)
 }
 \arguments{
 \item{sce}{A numeric matrix-like object of gene expression values where rows are genes and columns are cells.
 Alternatively, a SingleCellExperiment object containing such a matrix.}
-
-\item{genes.list}{Ensembl gene IDs for genes in \code{sce}.}
 
 \item{G1}{vector of column number having G1 genes expression}
 
 \item{S}{vector of column number having S genes expression}
 
 \item{G2M}{vector of column number having G2M genes expression}
+
+\item{genes.list}{Ensembl gene IDs for genes in \code{sce}.}
 }
 \value{
 A list containing training gene pairs for G1, S and G2M phase.

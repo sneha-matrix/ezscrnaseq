@@ -14,7 +14,7 @@
 ezcyclone <- function(sce, organism="hsa", gene.names=rownames(sce), pairs=NULL ,ncores=1, seed=100, iter=1000, 
                        min.iter=100, min.pairs=50, verbose=TRUE){
 
-  if(is.null(pairs)){
+  if (is.null(pairs)){
     if (organism=="hsa"){
       pairs <- readRDS(system.file("exdata", "human_cycle_markers.rds", package="scran"))
     } else if(organism=="mmu"){

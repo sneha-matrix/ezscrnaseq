@@ -14,7 +14,7 @@
 
 find_pairs <- function(sce, G1, S, G2M, genes.list=NULL){
   stopifnot(!is.null(G1), !is.null(S), !is.null(G2M))
-  if(is.null(genes.list)) genes.list=row.names(sce)
+  if (is.null(genes.list)) genes.list <- row.names(sce)
 
   sce2 <- sce[row.names(sce) %in% genes.list,]
   pairs <- sandbag(sce2, list(G1=G1, S=S, G2M=G2M))

@@ -3,9 +3,9 @@
 #' Cell cycle pairs creation using \pkg{scran} \code{sandbag}.
 #'
 #' @param genes Ensembl gene IDs for genes in \code{sce}.
-#' @param G1 vector of column indices of G1 genes.
-#' @param S vector of column indices of S genes.
-#' @param G2M vector of column indices of G2M genes.
+#' @param G1 Vector of column indices of G1 genes.
+#' @param S Vector of column indices of S genes.
+#' @param G2M Vector of column indices of G2M genes.
 #' @inheritParams qc_metrics
 #' @inheritParams scran::sandbag
 #' @details Genes in all three phases are required.

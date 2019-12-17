@@ -9,11 +9,11 @@ find_pairs(sce, G1, S, G2M, genes = NULL)
 \arguments{
 \item{sce}{A SingleCellExperiment object containing expression values, usually counts.}
 
-\item{G1}{vector of column indices of G1 genes.}
+\item{G1}{Vector of column indices of G1 genes.}
 
-\item{S}{vector of column indices of S genes.}
+\item{S}{Vector of column indices of S genes.}
 
-\item{G2M}{vector of column indices of G2M genes.}
+\item{G2M}{Vector of column indices of G2M genes.}
 
 \item{genes}{Ensembl gene IDs for genes in \code{sce}.}
 }

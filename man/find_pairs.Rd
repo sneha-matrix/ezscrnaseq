@@ -9,11 +9,11 @@ find_pairs(sce, G1, S, G2M, genes = NULL)
 \arguments{
 \item{sce}{A SingleCellExperiment object containing expression values, usually counts.}
 
-\item{G1}{vector of column number having G1 genes expression}
+\item{G1}{vector of column indices of G1 genes.}
 
-\item{S}{vector of column number having S genes expression}
+\item{S}{vector of column indices of S genes.}
 
-\item{G2M}{vector of column number having G2M genes expression}
+\item{G2M}{vector of column indices of G2M genes.}
 
 \item{genes}{Ensembl gene IDs for genes in \code{sce}.}
 }
@@ -22,4 +22,7 @@ A list containing training gene pairs for G1, S, and G2M phase.
 }
 \description{
 Cell cycle pairs creation using \pkg{scran} \code{sandbag}.
+}
+\details{
+Genes in all three phases are required.
 }

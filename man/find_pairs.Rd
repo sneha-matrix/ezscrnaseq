@@ -4,11 +4,10 @@
 \alias{find_pairs}
 \title{Cell cycle training step of the pair-based prediction}
 \usage{
-find_pairs(sce, G1, S, G2M, genes.list = NULL)
+find_pairs(sce, G1, S, G2M, genes = NULL)
 }
 \arguments{
-\item{sce}{A numeric matrix-like object of gene expression values where rows are genes and columns are cells.
-Alternatively, a SingleCellExperiment object containing such a matrix.}
+\item{sce}{A SingleCellExperiment object containing expression values, usually counts.}
 
 \item{G1}{vector of column number having G1 genes expression}
 
@@ -16,11 +15,11 @@ Alternatively, a SingleCellExperiment object containing such a matrix.}
 
 \item{G2M}{vector of column number having G2M genes expression}
 
-\item{genes.list}{Ensembl gene IDs for genes in \code{sce}.}
+\item{genes}{Ensembl gene IDs for genes in \code{sce}.}
 }
 \value{
-A list containing training gene pairs for G1, S and G2M phase.
+A list containing training gene pairs for G1, S, and G2M phase.
 }
 \description{
-Cell cycle pairs creation using \pkg{scran} \code{sandbag}
+Cell cycle pairs creation using \pkg{scran} \code{sandbag}.
 }

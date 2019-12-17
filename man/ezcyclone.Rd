@@ -20,11 +20,11 @@ ezcyclone(
 \arguments{
 \item{sce}{A SingleCellExperiment object containing expression values, usually counts.}
 
-\item{organism}{hsa or mmu for human or mouse genes pre-trained marker sets.}
+\item{organism}{\code{hsa} or \code{mmu} for human or mouse genes pre-trained marker sets.}
 
 \item{gene.names}{Ensembl gene IDs for genes in \code{sce}.}
 
-\item{pairs, }{pair information for training marker sets. If set to NULL uses pre-trained marker sets}
+\item{pairs}{Pair information for training marker sets. If set to \code{NULL}, uses pre-trained marker sets.}
 
 \item{ncores}{Number of cores.}
 
@@ -42,5 +42,5 @@ ezcyclone(
 A list containing phases, scores, and normalized.scores.
 }
 \description{
-Cell cycle phase classification using \pkg{scran} \code{cyclone}
+Cell cycle phase classification using \pkg{scran} \code{cyclone}.
 }

@@ -20,7 +20,7 @@ filter_genes(
 
 \item{cutoff}{The cutoff of avarage counts for filtering.}
 
-\item{use_size_factors}{Deprecated, same as \code{size_factors}.}
+\item{use_size_factors}{a logical scalar specifying whether the size factors in \code{object} should be used to construct effective library sizes.}
 
 \item{ncores}{Number of cores.}
 

@@ -32,13 +32,9 @@ find_markers(
 
 \item{design}{Design matirx.}
 
-\item{pval.type}{A string specifying how p-values are to be combined across pairwise comparisons for a given group/cluster.}
+\item{pval.type}{A string specifying the type of combined p-value to be computed, i.e., Simes' or IUT.}
 
 \item{lfc}{Log fold-change.}
-
-\item{test.type}{String specifying the type of pairwise test to perform -
-a t-test with \code{"t"}, a Wilcoxon rank sum test with \code{"wilcox"}, 
-or a binomial test with \code{"binom"}.}
 
 \item{direction}{Direction of change.}
 

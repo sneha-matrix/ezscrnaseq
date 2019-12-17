@@ -11,7 +11,8 @@
 #' @return A list containing phases, scores, and normalized.scores.
 #' @export
 
-ezcyclone <- function(sce, organism="hsa", gene.names=rownames(sce), pairs=NULL ,ncores=1, seed=100, iter=1000, min.iter=100, min.pairs=50, verbose=TRUE){
+ezcyclone <- function(sce, organism="hsa", gene.names=rownames(sce), pairs=NULL ,ncores=1, seed=100, iter=1000, 
+                       min.iter=100, min.pairs=50, verbose=TRUE){
 
   if(is.null(pairs)){
     if (organism=="hsa"){

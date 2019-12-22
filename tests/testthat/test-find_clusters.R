@@ -12,5 +12,9 @@ test_that("ncores=2", {
 
   expect_warning(sce1 <- find_clusters(sce1, snn_k=5, ncores=2, plot=FALSE, verbose=FALSE))
   expect_setequal(as.vector(table(sce1$Cluster)), c(32,30))
+  
+  # method="spinglass"
+  expect_warning(sce1 <- find_clusters(sce1, snn_k=5, ncores=2, plot=FALSE, verbose=FALSE, method="spinglass"))
+  expect_setequal(as.vector(table(sce1$Cluster)), c(28,22))	
 })
 

@@ -19,6 +19,16 @@ test_that("ncore=2", {
   expect_equal(assignments$phases[1:3], c("S","G2M", "G1"))
 })
 
+test_that("mmu test", {
+  #test with human sce object for mouse pairs
+  expect_error(assignments <- ezcyclone(sce, organism="mmu", min.pairs=5, verbose=FALSE, iter=10000, min.iter=1000)) 
+  mmu.sce <- sce
+  pairs <- readRDS(system.file("exdata", "mouse_cycle_markers.rds", package="scran"))
+  row.names(mmu.sce)<-sample(pairs$S[,1], 2000, replace=TRUE)
+  assignments <- ezcyclone(mmu.sce, organism="mmu", min.pairs=5, verbose=FALSE, iter=10000, min.iter=1000) 
+  expect_equal(unique(assignments$phases), c("G1","G2M", "S"))
+})
+
 test_that("negative tests",{
   emptypairs <- scran::sandbag(head(sce), list(G1=G1, S=S, G2M=G2M))
   expect_error(ezcyclone(sce, organism="hsa", ncores=2, min.pairs=5, verbose=FALSE, iter=10000, min.iter=1000, pairs=emptypairs))

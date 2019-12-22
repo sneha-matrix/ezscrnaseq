@@ -22,9 +22,11 @@ test_that("ncore=2", {
 test_that("mmu test", {
   #test with human sce object for mouse pairs
   expect_error(assignments <- ezcyclone(sce, organism="mmu", min.pairs=5, verbose=FALSE, iter=10000, min.iter=1000)) 
+  
+  #converting hsa sce to mmu sce by replacing with mmu genes
   mmu.sce <- sce
   pairs <- readRDS(system.file("exdata", "mouse_cycle_markers.rds", package="scran"))
-  row.names(mmu.sce)<-sample(pairs$S[,1], 2000, replace=TRUE)
+  row.names(mmu.sce) <- head(pairs$S[,1], n=2000)
   assignments <- ezcyclone(mmu.sce, organism="mmu", min.pairs=5, verbose=FALSE, iter=10000, min.iter=1000) 
   expect_equal(unique(assignments$phases), c("G1","G2M", "S"))
 })

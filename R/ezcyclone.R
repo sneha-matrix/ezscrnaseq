@@ -26,9 +26,10 @@ ezcyclone <- function(sce, organism="hsa", gene.names=rownames(sce), pairs=NULL,
   bp <- SnowParam(workers=ncores, type=cl_type)
   register(bpstart(bp))
   suppressWarnings(set.seed(seed = 100, sample.kind = "Rounding"))
+  stopifnot(nrow(pairs$G1) > 0,nrow(pairs$S) > 0,nrow(pairs$G2M) > 0)
   assignments <- scran::cyclone(sce, pairs=pairs, gene.names=gene.names, iter=iter, min.iter=min.iter, min.pairs=min.pairs,
                          BPPARAM=bp, verbose=verbose)
   bpstop(bp)
-
+  stopifnot(any(!is.na(assignments$normalized.scores)), any(!is.na(assignments$phases)), any(!is.na(assignments$scores)))
   return(assignments)
 }

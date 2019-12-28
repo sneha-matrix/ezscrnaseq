@@ -11,7 +11,7 @@
 #' @return A SingleCellExperiment object with size factors.
 #' @export
 
-size_factors <- function(sce, min.size=10, max.size=3000, min.mean=0.1, group.col=NULL, method="igraph", seed=100, ncores=1, prefix=NULL, plot=TRUE, verbose=TRUE){
+size_factors <- function(sce, min.size=100, max.size=3000, min.mean=0.1, group.col=NULL, method="igraph", seed=100, ncores=1, prefix=NULL, plot=TRUE, verbose=TRUE){
 
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
   bp <- SnowParam(workers=ncores, type=cl_type)

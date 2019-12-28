@@ -32,35 +32,39 @@ qc_metrics <- function(sce, sym_col="symbol", by_nmads=TRUE, thresholds=c(3,3,3)
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
   bp <- SnowParam(workers=ncores, type=cl_type)
   register(bpstart(bp))
-  sce <- calculateQCMetrics(sce, feature_controls=list(Mt=is.mito), BPPARAM=bp)
+  #sce <- calculateQCMetrics(sceMock, feature_controls=list(Mt=is.mito), BPPARAM=bp)
+  sce1 <- perFeatureQCMetrics(sce, subsets=list(Mt=is.mito), BPPARAM=bp)
   bpstop(bp)
 
   # qc calculation
   if (by_nmads) {
     if (any(thresholds > 5)) stop("Thresholds are too big for unsing MAD")
 
-    libsize.drop <- isOutlier(sce$total_counts, nmads=thresholds[1], type="lower", log=TRUE)
-    feature.drop <- isOutlier(sce$total_features_by_counts, nmads=thresholds[2], type="lower", log=TRUE)
-    if (n_mito >0) mito.drop <- isOutlier(sce$pct_counts_Mt, nmads=thresholds[3], type="higher")
+    libsize.drop <- isOutlier(sce1$subsets_Mt_mean, nmads=thresholds[1], type="lower", log=TRUE)
+    feature.drop <- isOutlier(sce1$subsets_Mt_detected, nmads=thresholds[2], type="lower", log=TRUE)
+    if (n_mito >0) mito.drop <- suppressWarnings(isOutlier(sce1$subsets_Mt_ratio, nmads=thresholds[3], type="higher"))
 
   } else{
     if(any(thresholds < 10)) stop("Thresholds are too small for unsing actual counts or percentages")
 
-    libsize.drop <- sce$total_counts < thresholds[1]
-    feature.drop <- sce$total_features_by_counts < thresholds[2]
-    if (n_mito > 0) mito.drop <- sce$pct_counts_Mt > thresholds[3]
+    libsize.drop <- sce1$subsets_Mt_mean < thresholds[1]
+    feature.drop <- sce1$subsets_Mt_detected < thresholds[2]
+    if (n_mito > 0) mito.drop <- sce1$subsets_Mt_ratio > thresholds[3]
   }
 
   # qc tab
   if (n_mito > 0){
     qc <- data.frame(ByLibSize=sum(libsize.drop), ByFeature=sum(feature.drop), ByMito=sum(mito.drop),
                      Remaining=sum(!(libsize.drop | feature.drop | mito.drop)))
-    cutoff <- data.frame(LibSize=max(sce$total_counts[libsize.drop]), Feature=max(sce$total_features_by_counts[feature.drop]),
-                         Mito=min(sce$pct_counts_Mt[mito.drop]))
+    #cutoff <- data.frame(LibSize=max(sce$total_counts[libsize.drop]), Feature=max(sce$total_features_by_counts[feature.drop]),
+    #                    Mito=min(sce$pct_counts_Mt[mito.drop]))
+    cutoff <- data.frame(LibSize=max(sce1$subsets_Mt_mean[libsize.drop]), Feature=max(sce1$subsets_Mt_detected[feature.drop]),
+                        Mito=min(sce1$subsets_Mt_ratio[mito.drop]))
+
   } else{
     qc <- data.frame(ByLibSize=sum(libsize.drop), ByFeature=sum(feature.drop), ByMito=0,
                      Remaining=sum(!(libsize.drop | feature.drop)))
-    cutoff <- data.frame(LibSize=max(sce$total_counts[libsize.drop]), Feature=max(sce$total_features_by_counts[feature.drop]))
+    cutoff <- data.frame(LibSize=max(sce1$subsets_Mt_mean[libsize.drop]), Feature=max(sce1$subsets_Mt_detected[feature.drop]))
   }
 
   if (verbose){
@@ -103,6 +107,6 @@ qc_metrics <- function(sce, sym_col="symbol", by_nmads=TRUE, thresholds=c(3,3,3)
     keep <- !(libsize.drop | feature.drop)
   }
 
-  sce <- sce[, keep]
+  sce <- sce[keep, ]
   return(sce)
 }

@@ -48,7 +48,8 @@ find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, m
   if (verbose) cat("\nModularity score: ", ms, "\n")
 
   # total weight between nodes
-  mod_out <- clusterModularity(snn_gr, sce$Cluster, get.values=TRUE)
+  #mod_out <- clusterModularity(snn_gr, sce$Cluster, get.values=TRUE)
+  mod_out <- clusterModularity(snn_gr, sce$Cluster, get.weights=TRUE)
   ratio <- log2(mod_out$observed / mod_out$expected + 1)
 
   if (plot){

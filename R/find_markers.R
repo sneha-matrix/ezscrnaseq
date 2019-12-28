@@ -21,7 +21,7 @@ find_markers <- function(sce, clusters, annot, block=NULL, design=NULL, pval.typ
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
   bp <- SnowParam(workers=ncores, type=cl_type)
   register(bpstart(bp))
-  markers <- findMarkers(sce, clusters=clusters, block=block, design=design, pval.type=pval.type, lfc=lfc, test.type=test.type, direction=direction,
+  markers <- findMarkers(sce, groups=clusters, block=block, design=design, pval.type=pval.type, lfc=lfc, test.type=test.type, direction=direction,
                          assay.type=assay_type, BPPARAM=bp)
   bpstop(bp)
 

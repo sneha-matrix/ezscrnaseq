@@ -14,11 +14,12 @@
 ezcyclone <- function(sce, organism="hsa", gene.names=NULL, pairs=NULL, ncores=1, seed=100, iter=1000,
                        min.iter=100, min.pairs=50, verbose=TRUE){
 
+  stopifnot(nrow(pairs$G1) > 0,nrow(pairs$S) > 0,nrow(pairs$G2M) > 0)
   if (is.null(gene.names)){
-	gene.names=rownames(sce)
-      } else {
-	 stopifnot(length(intersect(rownames(sce), gene.names)) == length(gene.names), nrow(sce) == length(gene.names))
-      }
+      gene.names=rownames(sce)
+   } else {
+      stopifnot(length(intersect(rownames(sce), gene.names)) == length(gene.names), nrow(sce) == length(gene.names))
+   }
   
   if (is.null(pairs)){
     if (organism=="hsa"){
@@ -32,7 +33,7 @@ ezcyclone <- function(sce, organism="hsa", gene.names=NULL, pairs=NULL, ncores=1
   bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)
   BiocParallel::register(bpstart(bp))
   suppressWarnings(set.seed(seed = seed, sample.kind = "Rounding"))
-  stopifnot(nrow(pairs$G1) > 0,nrow(pairs$S) > 0,nrow(pairs$G2M) > 0)
+
   assignments <- scran::cyclone(sce, pairs=pairs, gene.names=gene.names, iter=iter, min.iter=min.iter, min.pairs=min.pairs,
                          BPPARAM=bp, verbose=verbose)
   BiocParallel::bpstop(bp)

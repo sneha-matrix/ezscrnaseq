@@ -25,10 +25,10 @@ If zero, a Poisson distribution is used.}
 \item{span}{the parameter \eqn{\alpha} which controls the degree of
     smoothing.}
 
-\item{block}{A factor specifying the blocking level for each cell.}
+\item{block}{A factor specifying the blocking levels for each cell in \code{x}.
+If specified, variance modelling is performed separately within each block and statistics are combined across blocks.}
 
-\item{design}{A numeric matrix describing the uninteresting factors contributing to expression in each cell.
-Alternatively, a single factor can be supplied for one-way layouts.}
+\item{design}{A numeric matrix containing blocking terms for uninteresting factors of variation.}
 
 \item{assay_type}{A string specifying which assay values to use, e.g., "counts" or "logcounts".}
 

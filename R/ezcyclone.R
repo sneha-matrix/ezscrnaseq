@@ -23,7 +23,7 @@ ezcyclone <- function(sce, organism="hsa", gene.names=rownames(sce), pairs=NULL,
   }
 
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
-  bp <- SnowParam(workers=ncores, type=cl_type)
+  bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)
   register(bpstart(bp))
   suppressWarnings(set.seed(seed = 100, sample.kind = "Rounding"))
   stopifnot(nrow(pairs$G1) > 0,nrow(pairs$S) > 0,nrow(pairs$G2M) > 0)

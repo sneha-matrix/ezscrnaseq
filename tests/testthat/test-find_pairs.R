@@ -1,6 +1,6 @@
 context("find_pairs")
 
-test_that("ncore=1", {
+test_that("tests", {
   mypairs <- find_pairs(sce, G1=G1, S=S, G2M=G2M)
   genes2 <- row.names(sce)
   mypairs2 <- find_pairs(sce, G1=G1, S=S, G2M=G2M, genes=genes2)

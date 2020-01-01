@@ -26,7 +26,7 @@ Cell cycle pairs creation using \pkg{scran} \code{sandbag}.
 \details{
 Genes in all three phases are required.
 
-Minimum 1000 genes should overlap between \code{sce} and \code{genes}
+Minimum 1000 genes should overlap between \code{sce} and \code{genes}.
 
 Function throws error if no pairs are found
 }

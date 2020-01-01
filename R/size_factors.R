@@ -11,21 +11,23 @@
 #' @return A SingleCellExperiment object with size factors.
 #' @export
 
-size_factors <- function(sce, min.size=10, max.size=3000, min.mean=0.1, group.col=NULL, method="igraph", seed=100, ncores=1, prefix=NULL, plot=TRUE, verbose=TRUE){
+size_factors <- function(sce, min.size=10, max.size=3000, min.mean=0.1, group.col=NULL, method="igraph", seed=100, 
+			  ncores=1, prefix=NULL, plot=TRUE, verbose=TRUE){
 
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
-  bp <- SnowParam(workers=ncores, type=cl_type)
+  bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)
   register(bpstart(bp))
 
   suppressWarnings(set.seed(seed = 100, sample.kind = "Rounding"))
-  suppressWarnings(clusters <- quickCluster(sce, min.size=min.size, min.mean=min.mean, method=method, BPPARAM=bp))
+  suppressWarnings(clusters <- scran::quickCluster(sce, min.size=min.size, min.mean=min.mean, method=method, BPPARAM=bp))
 
   if (verbose){
     cat("\nNumber of cells in clusters:\n")
     print(kable(table(clusters)))
   }
 
-  sce <- computeSumFactors(sce, cluster=clusters, max.cluster.size=max.size, min.mean=min.mean, positive=TRUE, BPPARAM=bp)
+  sce <- scran::computeSumFactors(sce, cluster=clusters, max.cluster.size=max.size, min.mean=min.mean, positive=TRUE, 
+					BPPARAM=bp)
   bpstop(bp)
 
   if (verbose){
@@ -50,13 +52,13 @@ size_factors <- function(sce, min.size=10, max.size=3000, min.mean=0.1, group.co
     if (!is.null(group.col)){
       cols <- as.numeric(as.factor(colData(sce)[, group.col]))+1
       if(max(cols) > 8) stop("Group number can't be more than 8.")
-      graphics::plot(sizeFactors(sce), sce$total_counts/1e3, log="xy", ylab="Library size (thousands)", xlab="Size factor", main="Size factors from deconvolution",
-           col=scales::alpha(grDevices::palette()[cols], 0.3), pch=16)
+      graphics::plot(sizeFactors(sce), sce$total_counts/1e3, log="xy", ylab="Library size (thousands)", xlab="Size factor", 
+			main="Size factors from deconvolution", col=scales::alpha(grDevices::palette()[cols], 0.3), pch=16)
       legd <- sort(unique(colData(sce)[, group.col]))
       graphics::legend("topleft", col=2:(length(legd)+1), pch=16, cex=1.2, legend=legd)
     } else {
-      graphics::plot(sizeFactors(sce), sce$total_counts/1e3, log="xy", ylab="Library size (thousands)", xlab="Size factor", main="Size factors from deconvolution",
-           col= scales::alpha(grDevices::palette()[1], 0.3), pch=16)
+      graphics::plot(sizeFactors(sce), sce$total_counts/1e3, log="xy", ylab="Library size (thousands)", xlab="Size factor", 
+			main="Size factors from deconvolution", col= scales::alpha(grDevices::palette()[1], 0.3), pch=16)
     }
   }
   return(sce)

@@ -14,16 +14,16 @@
 #' @return A SingleCellExperiment object with cell cluster information.
 #' @export
 
-find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, method="walktrap", steps=4, spins=25, min_member=20, prefix=NULL,
-                          plot=TRUE, verbose=TRUE){
+find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, method="walktrap", steps=4, spins=25, 
+                          min_member=20, prefix=NULL, plot=TRUE, verbose=TRUE){
 
   suppressWarnings(set.seed(seed = 100, sample.kind = "Rounding"))
 
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
-  bp <- SnowParam(workers=ncores, type=cl_type)
+  bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)
   register(bpstart(bp))
   # snn
-  snn_gr <- buildSNNGraph(sce, use.dimred=use_dimred, k=snn_k, BPPARAM=bp)
+  snn_gr <- scran::buildSNNGraph(sce, use.dimred=use_dimred, k=snn_k, BPPARAM=bp)
   bpstop(bp)
 
   # cluster

@@ -15,22 +15,24 @@
 #' @return A data.frame for the statistics and annotation of top marker geness
 #' @export
 
-find_markers <- function(sce, clusters, annot, block=NULL, design=NULL, pval.type="any", lfc=1, test.type="t", direction="up", assay_type="logcounts", ncores=1,
-                         fdr_cutoff=0.25, prefix=NULL, write=TRUE){
+find_markers <- function(sce, clusters, annot, block=NULL, design=NULL, pval.type="any", lfc=1, test.type="t",
+                          direction="up", assay_type="logcounts", ncores=1, fdr_cutoff=0.25, prefix=NULL, write=TRUE){
 
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
-  bp <- SnowParam(workers=ncores, type=cl_type)
+  bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)
   register(bpstart(bp))
-  markers <- findMarkers(sce, groups=clusters, block=block, design=design, pval.type=pval.type, lfc=lfc, test.type=test.type, direction=direction,
-                         assay.type=assay_type, BPPARAM=bp)
+  markers <- scran::findMarkers(sce, groups=clusters, block=block, design=design, pval.type=pval.type, lfc=lfc, 
+                         test.type=test.type, direction=direction, assay.type=assay_type, BPPARAM=bp)
   bpstop(bp)
 
   clus <- names(markers)
   if (pval.type=="any"){
-    marker_sets <- lapply(seq_along(markers), function(i) tryCatch(data.frame(markers[[i]][markers[[i]][,3] < fdr_cutoff, 1:3], Cluster=clus[i]), error=function(e) NULL))
+    marker_sets <- lapply(seq_along(markers), function(i) tryCatch(data.frame(markers[[i]][markers[[i]][,3] < 
+			      fdr_cutoff, 1:3], Cluster=clus[i]), error=function(e) NULL))
     suffix <- "simes"
   } else if(pval.type=="all"){
-    marker_sets <- lapply(seq_along(markers), function(i) tryCatch(data.frame(markers[[i]][markers[[i]][,2] < fdr_cutoff, 1:2], Cluster=clus[i]), error=function(e) NULL))
+    marker_sets <- lapply(seq_along(markers), function(i) tryCatch(data.frame(markers[[i]][markers[[i]][,2] < 
+			     fdr_cutoff, 1:2], Cluster=clus[i]), error=function(e) NULL))
     suffix <- "iut"
   }
 
@@ -41,7 +43,8 @@ find_markers <- function(sce, clusters, annot, block=NULL, design=NULL, pval.typ
   marker_sets <- ezlimma::df_signif(marker_sets, 3)
   marker_sets <- data.frame(marker_sets, annot[marker_sets$ID, ])
 
-  if (write) utils::write.csv(marker_sets, paste0(paste(c(prefix, "clusters_top_markers", suffix), collapse="_"), ".csv"), na="", row.names=FALSE)
+  if (write) utils::write.csv(marker_sets, paste0(paste(c(prefix, "clusters_top_markers", suffix), collapse="_"), ".csv"),
+	                       na="", row.names=FALSE)
 
   return(marker_sets)
 }

@@ -11,9 +11,9 @@
 filter_genes <- function(sce, cutoff=0, use_size_factors=FALSE, ncores=1, prefix=NULL, plot=TRUE, write=TRUE, verbose=TRUE){
 
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
-  bp <- SnowParam(workers=ncores, type=cl_type)
+  bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)
   register(bpstart(bp))
-  rowData(sce)$ave.count <- calculateAverage(sce, use_size_factors=NULL, BPPARAM=bp)
+  rowData(sce)$ave.count <- scater::calculateAverage(sce, use_size_factors=NULL, BPPARAM=bp)
   bpstop(bp)
 
   keep <- rowData(sce)$ave.count > cutoff

@@ -6,7 +6,7 @@
 \usage{
 size_factors(
   sce,
-  min.size = 100,
+  min.size = 10,
   max.size = 3000,
   min.mean = 0.1,
   group.col = NULL,

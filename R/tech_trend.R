@@ -5,8 +5,7 @@
 #' @param assay_type A string specifying which assay values to use, e.g., "counts" or "logcounts".
 #' @inheritParams qc_metrics
 #' @inheritParams scran::makeTechTrend
-#' @inheritParams scran::trendVar
-#' @inheritParams scran::decomposeVar
+#' @inheritParams scran::modelGeneVar
 #' @inheritParams stats::loess
 #' @return A function accepting a mean log-expression as input and returning the variance of the log-expression as the output
 #' @export
@@ -16,11 +15,11 @@ tech_trend <- function(sce, dispersion=0, span=0.4, block=NA, design=NA, assay_t
   # no spike ref: https://github.com/MarioniLab/scran/issues/7
   # according to scran::multiBlockVar(), use logcounts for tech trend
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
-  bp <- SnowParam(workers=ncores, type=cl_type)
+  bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)
   register(bpstart(bp))
-  var_fit_trend <- makeTechTrend(dispersion=dispersion, x=sce, BPPARAM=bp)
+  var_fit_trend <- scran::makeTechTrend(dispersion=dispersion, x=sce, BPPARAM=bp)
 
-  var_fit <- modelGeneVar(sce, assay.type=assay_type)	
+  var_fit <- scran::modelGeneVar(sce, assay.type=assay_type)	
   #decypted function 
   #var_fit <- trendVar(sce, parametric=FALSE, loess.args=list(span=span), use.spikes=FALSE, assay.type=assay_type)
   #var_out <- decomposeVar(sce, fit=var_fit, block=block, design=design, assay.type=assay_type, BPPARAM=bp)

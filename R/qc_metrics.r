@@ -30,10 +30,10 @@ qc_metrics <- function(sce, sym_col="symbol", by_nmads=TRUE, thresholds=c(3,3,3)
   if (verbose) cat("Number of mitochondrial genes:", n_mito, "\n")
 
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
-  bp <- SnowParam(workers=ncores, type=cl_type)
+  bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)
   register(bpstart(bp))
   #sce <- calculateQCMetrics(sceMock, feature_controls=list(Mt=is.mito), BPPARAM=bp)
-  sce1 <- perFeatureQCMetrics(sce, subsets=list(Mt=is.mito), BPPARAM=bp)
+  sce1 <- scater::perFeatureQCMetrics(sce, subsets=list(Mt=is.mito), BPPARAM=bp)
   bpstop(bp)
 
   # qc calculation

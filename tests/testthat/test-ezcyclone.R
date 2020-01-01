@@ -1,4 +1,3 @@
-
 context("ezcyclone")
 
 test_that("ncore=1 vs ncore=2", {
@@ -8,11 +7,10 @@ test_that("ncore=1 vs ncore=2", {
 
   mypairs <- find_pairs(sce, genes=genes, G1=G1, S=S, G2M=G2M)
   assignments <- ezcyclone(sce, organism="hsa", ncores=1, min.pairs=5, verbose=FALSE, iter=100, min.iter=10, pairs=mypairs)
-  assignments2 <- ezcyclone(sce, organism="hsa", min.pairs=5, verbose=FALSE, iter=100, min.iter=10, pairs=mypairs)
+  assignments2 <- ezcyclone(sce, organism="hsa", ncores=2, min.pairs=5, verbose=FALSE, iter=100, min.iter=10, pairs=mypairs)
   expect_equal(assignments$phases, assignments2$phases)
 
 })
-
 
 test_that("mmu test", {
   #test with human sce object for mouse pairs
@@ -25,6 +23,7 @@ test_that("mmu test", {
   assignments <- ezcyclone(mmu.sce, organism="mmu", ncores=1, min.pairs=5, verbose=FALSE, iter=100, min.iter=10) 
   assignments2 <- ezcyclone(mmu.sce, organism="mmu", ncores=2, min.pairs=5, verbose=FALSE, iter=100, min.iter=10) 
   expect_equal(assignments$phases, assignments2$phases)
+
 })
 
 test_that("negative tests",{
@@ -41,4 +40,3 @@ test_that("negative tests",{
   colnames(p2$G2M)<-c("first","second")
   expect_error(ezcyclone(sce, organism="hsa", ncores=2, min.pairs=5, verbose=FALSE, iter=10, min.iter=3, pairs=p2))
 })
-

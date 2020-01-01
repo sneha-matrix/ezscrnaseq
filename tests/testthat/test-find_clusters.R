@@ -20,4 +20,3 @@ test_that("ncores=2", {
   expect_setequal(as.vector(table(sce1$Cluster)), c(28, 22))
   expect_equal(levels(sce1$Cluster), c("clus_1", "clus_2"))	
 })
-

@@ -7,7 +7,7 @@
 ezcyclone(
   sce,
   organism = "hsa",
-  gene.names = rownames(sce),
+  gene.names = NULL,
   pairs = NULL,
   ncores = 1,
   seed = 100,

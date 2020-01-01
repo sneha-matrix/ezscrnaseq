@@ -11,9 +11,15 @@
 #' @return A list containing phases, scores, and normalized.scores.
 #' @export
 
-ezcyclone <- function(sce, organism="hsa", gene.names=rownames(sce), pairs=NULL, ncores=1, seed=100, iter=1000,
+ezcyclone <- function(sce, organism="hsa", gene.names=NULL, pairs=NULL, ncores=1, seed=100, iter=1000,
                        min.iter=100, min.pairs=50, verbose=TRUE){
 
+  if (is.null(gene.names)){
+	gene.names=rownames(sce)
+      } else {
+	 stopifnot(length(intersect(rownames(sce), gene.names)) == length(gene.names), nrow(sce) == length(gene.names))
+      }
+  
   if (is.null(pairs)){
     if (organism=="hsa"){
       pairs <- readRDS(system.file("exdata", "human_cycle_markers.rds", package="scran"))
@@ -24,12 +30,12 @@ ezcyclone <- function(sce, organism="hsa", gene.names=rownames(sce), pairs=NULL,
 
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
   bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)
-  register(bpstart(bp))
-  suppressWarnings(set.seed(seed = 100, sample.kind = "Rounding"))
+  BiocParallel::register(bpstart(bp))
+  suppressWarnings(set.seed(seed = seed, sample.kind = "Rounding"))
   stopifnot(nrow(pairs$G1) > 0,nrow(pairs$S) > 0,nrow(pairs$G2M) > 0)
   assignments <- scran::cyclone(sce, pairs=pairs, gene.names=gene.names, iter=iter, min.iter=min.iter, min.pairs=min.pairs,
                          BPPARAM=bp, verbose=verbose)
-  bpstop(bp)
+  BiocParallel::bpstop(bp)
   stopifnot(any(!is.na(assignments$normalized.scores)), any(!is.na(assignments$phases)), any(!is.na(assignments$scores)))
   return(assignments)
 }

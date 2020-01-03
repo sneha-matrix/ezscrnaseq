@@ -22,7 +22,7 @@ ezcyclone(
 
 \item{organism}{\code{hsa} or \code{mmu} for human or mouse genes pre-trained marker sets.}
 
-\item{gene.names}{Ensembl gene IDs for genes in \code{sce}.}
+\item{gene.names}{Ensembl gene IDs for genes in \code{sce}. \code{length(genes)} should match with \code{nrow(sce)}}
 
 \item{pairs}{Pair information for training marker sets. If set to \code{NULL}, uses pre-trained marker sets.}
 

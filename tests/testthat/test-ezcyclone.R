@@ -51,7 +51,7 @@ test_that("default vs user input", {
 })
 
 test_that("mmu test", {
-  #genes in pairs mot present in sce
+  #genes in pairs not present in sce
   expect_error(assignments <- ezcyclone(sce, organism="mmu", min.pairs=5, verbose=FALSE, iter=10, min.iter=3)) 
   
   #converting hsa sce to mmu sce by replacing with mmu genes

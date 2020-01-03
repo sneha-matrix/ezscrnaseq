@@ -3,8 +3,10 @@
 #' Cell cycle phase classification using \pkg{scran} \code{cyclone}.
 #'
 #' @param organism `hsa` or `mmu` for human or mouse genes pre-trained marker sets.
-#' @param gene.names Ensembl gene IDs for genes in \code{sce}. \code{length(genes)} should match with \code{nrow(sce)}
-#' @param pairs Pair information for training marker sets. If set to `NULL`, uses pre-trained marker sets.
+#' @param gene.names Ensembl gene IDs for genes in \code{sce}. \code{length(gene.names)} should match with 
+#' \code{nrow(sce)}.
+#' @param pairs Pair information for training marker sets. If set to `NULL`, uses pre-trained marker sets. Some genes 
+#'  in pairs should overlap with \code{row.names(sce)}.
 #' @param seed Random seed.
 #' @inheritParams qc_metrics
 #' @inheritParams scran::cyclone
@@ -30,8 +32,8 @@ ezcyclone <- function(sce, organism="hsa", gene.names=NULL, pairs=NULL, ncores=1
   }
 
   suppressMessages(gene.pairs <- reshape2::melt(pairs))
-  genes <- union(gene.pairs$first,gene.pairs$second)	
-  stopifnot(length(intersect(genes,row.names(sce))) > 0)
+  genes <- union(gene.pairs$first, gene.pairs$second)	
+  stopifnot(length(intersect(genes, row.names(sce))) > 0)
 
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
   bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)

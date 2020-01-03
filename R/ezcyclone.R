@@ -29,6 +29,10 @@ ezcyclone <- function(sce, organism="hsa", gene.names=NULL, pairs=NULL, ncores=1
     }
   }
 
+  suppressMessages(gene.pairs <- reshape2::melt(pairs))
+  genes <- union(gene.pairs$first,gene.pairs$second)	
+  stopifnot(length(intersect(genes,row.names(sce))) > 0)
+
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
   bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)
   BiocParallel::register(bpstart(bp))

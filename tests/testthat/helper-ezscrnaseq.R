@@ -8,6 +8,7 @@ library(scater)
 library(scran)
 library(splatter)
 library(testthat)
+library(reshape2)
 
 options(stringsAsFactors = FALSE)
 

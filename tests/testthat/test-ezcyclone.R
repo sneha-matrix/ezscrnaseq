@@ -51,7 +51,7 @@ test_that("default vs user input", {
 })
 
 test_that("mmu test", {
-  #test with human sce object for mouse pairs
+  #genes in pairs mot present in sce
   expect_error(assignments <- ezcyclone(sce, organism="mmu", min.pairs=5, verbose=FALSE, iter=10, min.iter=3)) 
   
   #converting hsa sce to mmu sce by replacing with mmu genes
@@ -71,11 +71,11 @@ test_that("negative tests",{
   #pairs which return NA
   p2 <- list()		
   p2$S <- as.data.frame(t(genes[3:4]))
-  colnames(p2$S)<-c("first","second")
+  colnames(p2$S) <- c("first","second")
   p2$G1 <- as.data.frame(t(genes[6:7]))
-  colnames(p2$G1)<-c("first","second")
+  colnames(p2$G1) <- c("first","second")
   p2$G2M <- as.data.frame(t(genes[1:2]))
-  colnames(p2$G2M)<-c("first","second")
+  colnames(p2$G2M) <-c ("first","second")
   expect_error(ezcyclone(sce, organism="hsa", ncores=2, min.pairs=5, verbose=FALSE, iter=10, min.iter=3, pairs=p2))
 
   # nrow(sce) != length(genes)

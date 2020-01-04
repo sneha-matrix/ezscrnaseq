@@ -19,7 +19,7 @@ filter_genes <- function(sce, cutoff=0, ncores=1, prefix=NULL, plot=TRUE, write=
 
   keep <- rowData(sce)$ave.count > cutoff
   n_keep <- sum(keep)
-  if (verbose) cat("\nNumber of genes kept:", n_keep, "\n")
+  if (verbose) message("\nNumber of genes kept:", n_keep, "\n")
 
   if (plot){
     grDevices::pdf(paste(c(prefix, "average_counts.pdf"), collapse="_"))

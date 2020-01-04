@@ -6,7 +6,7 @@
 \usage{
 ezcyclone(
   sce,
-  organism = "hsa",
+  organism = c("hsa", "mmu"),
   gene.names = NULL,
   pairs = NULL,
   ncores = 1,

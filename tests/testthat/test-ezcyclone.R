@@ -85,4 +85,7 @@ test_that("negative tests",{
   genes2 <- row.names(sce)
   genes2[1] <- "MyFavGene"
   expect_error(ezcyclone(sce, organism="hsa", gene.names=genes2, ncores=2, min.pairs=5, verbose=FALSE, iter=10))
+  
+  # organism other then hsa and mmu
+  expect_error(assignments <- ezcyclone(sce, organism="myOrganism", min.pairs=5, verbose=FALSE, iter=100, min.iter=10))
 })

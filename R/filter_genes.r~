@@ -2,7 +2,7 @@
 #'
 #' Filter genes that have avarage counts fewer than \code{cutoff)}
 #'
-#' @param cutoff The cutoff of avarage counts for filtering. cutoff should be >= 0.
+#' @param cutoff The cutoff of avarage counts for filtering.
 #' @inheritParams qc_metrics
 #' @inheritParams scater::calcAverage
 #' @return A SingleCellExperiment object.

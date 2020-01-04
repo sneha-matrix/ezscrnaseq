@@ -1,7 +1,0 @@
-Logfile:20014-list-of-all-files-in-sneha-v027.log.txt
-
-File is pipe	/home/sneha//.zoom/data/com.zoom.ipc.confapp__req
-File is pipe	/home/sneha//.zoom/data/com.zoom.ipc.assistantapp__req
-File is pipe	/home/sneha//.zoom/data/com.zoom.ipc.assistantapp__res
-File is pipe	/home/sneha//.zoom/data/com.zoom.ipc.confapp__res
-ran for 863 secs = 0.239722222222222 hours

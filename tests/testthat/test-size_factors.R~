@@ -31,6 +31,11 @@ test_that("default vs user provided args", {
   sce2 <- size_factors(sce, min.size=5, min.mean=0, ncores=1, method="igraph", plot=FALSE, verbose=FALSE)
   expect_equal(sce1, sce2)
 
+  #test for   method = "hclust"	
+  sce1 <- size_factors(sce, min.size=5, min.mean=0, ncores=1, method="hclust", plot=FALSE, verbose=FALSE)
+  sce2 <- size_factors(sce, min.size=5, min.mean=0, ncores=2, method="hclust", plot=FALSE, verbose=FALSE)
+  expect_equal(sce1, sce2)
+
   #negative test for method	
   expect_error(size_factors(sce, min.size=5, min.mean=0, ncores=1, method="mycluster", plot=FALSE, verbose=FALSE))
 })

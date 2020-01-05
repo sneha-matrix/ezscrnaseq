@@ -11,7 +11,7 @@
 #' @return A SingleCellExperiment object with size factors.
 #' @export
 
-size_factors <- function(sce, min.size=10, max.size=3000, min.mean=0.1, method = c("igraph"),
+size_factors <- function(sce, min.size=10, max.size=3000, min.mean=0.1, method = c("igraph", "hclust"),
   				seed=100, ncores=1, prefix=NULL, plot=TRUE, verbose=TRUE){
 
   method <- match.arg(method)

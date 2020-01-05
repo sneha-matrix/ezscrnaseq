@@ -9,8 +9,7 @@ size_factors(
   min.size = 10,
   max.size = 3000,
   min.mean = 0.1,
-  group.col = NULL,
-  method = "igraph",
+  method = c("igraph", "hclust"),
   seed = 100,
   ncores = 1,
   prefix = NULL,
@@ -27,8 +26,6 @@ size_factors(
 
 \item{min.mean}{A numeric scalar specifying the filter to be applied on the average count for each filter prior to computing ranks.
 Only used when \code{use.ranks=TRUE}, see \code{?\link[scran]{scaledColRanks}} for details.}
-
-\item{group.col}{column name of the grouping variable on the samples in colData(sce).}
 
 \item{method}{String specifying the clustering method to use.
 \code{"hclust"} uses hierarchical clustering while \code{"igraph"} uses graph-based clustering.}

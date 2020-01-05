@@ -2,7 +2,7 @@
 #'
 #' Calculate deconvolving size factors from cell pools using \pkg{ scran} \code{computeSumFactors}
 #'
-#' @param group.col column name of the grouping variable on the samples in colData(sce).
+
 #' @param max.size Maximum cluster size.
 #' @param seed Random seed.
 #' @inheritParams qc_metrics
@@ -11,28 +11,30 @@
 #' @return A SingleCellExperiment object with size factors.
 #' @export
 
-size_factors <- function(sce, min.size=10, max.size=3000, min.mean=0.1, group.col=NULL, method="igraph", seed=100, 
-			  ncores=1, prefix=NULL, plot=TRUE, verbose=TRUE){
+size_factors <- function(sce, min.size=10, max.size=3000, min.mean=0.1, method = c("igraph", "hclust"),
+  				seed=100, ncores=1, prefix=NULL, plot=TRUE, verbose=TRUE){
 
+  method <- match.arg(method)
 
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
   bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)
-  register(bpstart(bp))
+  BiocParallel::register(bpstart(bp))
 
-  suppressWarnings(set.seed(seed = 100, sample.kind = "Rounding"))
-  suppressWarnings(clusters <- scran::quickCluster(sce, min.size=min.size, min.mean=min.mean, method=method, BPPARAM=bp))
+  suppressWarnings(set.seed(seed = seed, sample.kind = "Rounding"))
+  suppressWarnings(clusters <- scran::quickCluster(sce, min.size=min.size, min.mean=min.mean, method=method, 
+			BPPARAM=bp))
 
   if (verbose){
-    cat("\nNumber of cells in clusters:\n")
+    message("\nNumber of cells in clusters:\n")
     print(kable(table(clusters)))
   }
 
   sce <- scran::computeSumFactors(sce, cluster=clusters, max.cluster.size=max.size, min.mean=min.mean, positive=TRUE, 
 					BPPARAM=bp)
-  bpstop(bp)
+  BiocParallel::bpstop(bp)
 
   if (verbose){
-    cat("\nSummary of size factors:\n")
+    message("\nSummary of size factors:\n")
     print(summary(sizeFactors(sce)))
   }
 
@@ -43,23 +45,25 @@ size_factors <- function(sce, min.size=10, max.size=3000, min.mean=0.1, group.co
     sce <- sce[, sizeFactors(sce) > 0]
   }
 
-  # scatter
+  # scatter not working sce$total_counts is always NULL may be decrypted
   if (plot){
     if (is.null(sce$total_counts)) stop("Total counts are not calculated yet.")
-
+   # @param group.col column name of the grouping variable on the samples in colData(sce). Not working
     grDevices::pdf(paste(c(prefix, "size_factor_scatter.pdf"), collapse="_"))
     on.exit(grDevices::dev.off())
 
     if (!is.null(group.col)){
       cols <- as.numeric(as.factor(colData(sce)[, group.col]))+1
       if(max(cols) > 8) stop("Group number can't be more than 8.")
-      graphics::plot(sizeFactors(sce), sce$total_counts/1e3, log="xy", ylab="Library size (thousands)", xlab="Size factor", 
-			main="Size factors from deconvolution", col=scales::alpha(grDevices::palette()[cols], 0.3), pch=16)
+      graphics::plot(sizeFactors(sce), sce$total_counts/1e3, log="xy", ylab="Library size (thousands)", 
+			xlab="Size factor", main="Size factors from deconvolution", 
+			col=scales::alpha(grDevices::palette()[cols], 0.3), pch=16)
       legd <- sort(unique(colData(sce)[, group.col]))
       graphics::legend("topleft", col=2:(length(legd)+1), pch=16, cex=1.2, legend=legd)
     } else {
-      graphics::plot(sizeFactors(sce), sce$total_counts/1e3, log="xy", ylab="Library size (thousands)", xlab="Size factor", 
-			main="Size factors from deconvolution", col= scales::alpha(grDevices::palette()[1], 0.3), pch=16)
+      graphics::plot(sizeFactors(sce), sce$total_counts/1e3, log="xy", ylab="Library size (thousands)", 
+			xlab="Size factor", main="Size factors from deconvolution", 
+			col= scales::alpha(grDevices::palette()[1], 0.3), pch=16)
     }
   }
   return(sce)

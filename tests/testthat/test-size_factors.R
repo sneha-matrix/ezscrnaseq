@@ -2,7 +2,7 @@ context("size_factors")
 
 test_that("default vs user provided args", {
   #test for ncore	
-  sce1 <- size_factors(sce, min.size=5, min.mean=0, ncores=1, plot=FALSE, verbose=FALSE)
+  sce1 <- size_factors(sce, min.size=5, min.mean=0, ncores=2, plot=FALSE, verbose=FALSE)
   sce2 <- size_factors(sce, min.size=5, min.mean=0, ncores=1, plot=FALSE, verbose=FALSE)
   expect_equal(sce1, sce2)
 
@@ -31,8 +31,8 @@ test_that("default vs user provided args", {
   sce2 <- size_factors(sce, min.size=5, min.mean=0, ncores=1, method="igraph", plot=FALSE, verbose=FALSE)
   expect_equal(sce1, sce2)
 
-  #negative test for method	
-  expect_error(size_factors(sce, min.size=5, min.mean=0, ncores=1, method="mycluster", plot=FALSE, verbose=FALSE))
+  #negative test for min.size > max.size	
+  expect_error(size_factors(sce, min.size=500, max.size=5, min.mean=0, ncores=1, method="mycluster", plot=FALSE, verbose=FALSE))
 })
 
 

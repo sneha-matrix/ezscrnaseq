@@ -11,11 +11,11 @@
 #' @return A SingleCellExperiment object with size factors.
 #' @export
 
-size_factors <- function(sce, min.size=10, max.size=3000, min.mean=0.1, method = c("igraph"),
+size_factors <- function(sce, min.size=10, max.size=3000, min.mean=0.1, method="igraph",
   				seed=100, ncores=1, prefix=NULL, plot=TRUE, verbose=TRUE){
 
-  method <- match.arg(method)
-
+  #method <- match.arg(method)
+  stopifnot(min.size <= max.size)
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
   bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)
   BiocParallel::register(bpstart(bp))
@@ -23,6 +23,9 @@ size_factors <- function(sce, min.size=10, max.size=3000, min.mean=0.1, method =
   suppressWarnings(set.seed(seed = seed, sample.kind = "Rounding"))
   suppressWarnings(clusters <- scran::quickCluster(sce, min.size=min.size, min.mean=min.mean, method=method, 
 			BPPARAM=bp))
+  #warning message from quickCluster
+  #Warning in (function (A, nv = 5, nu = nv, maxit = 1000, work = nv + 7, reorth = TRUE, :
+  #You're computing too large a percentage of total singular values, use a standard svd instead.
 
   if (verbose){
     message("\nNumber of cells in clusters:\n")

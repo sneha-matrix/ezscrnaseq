@@ -88,4 +88,11 @@ test_that("negative tests",{
   
   # organism other then hsa and mmu
   expect_error(assignments <- ezcyclone(sce, organism="myOrganism", min.pairs=5, verbose=FALSE, iter=100, min.iter=10))
+  #min.pairs is negative
+  expect_error(ezcyclone(sce, organism="hsa", ncores=1, min.pairs= -1, verbose=FALSE, iter=102, min.iter=100 ))
+  expect_error(ezcyclone(sce, organism="hsa", ncores=1, min.pairs= 0, verbose=FALSE, iter=102, min.iter=100 ))
+  #iter < min.iter
+  expect_error(ezcyclone(sce, organism="hsa", ncores=1, min.pairs= -1, verbose=FALSE, iter=10, min.iter=100 ))
+  #ncore=0
+  expect_error(ezcyclone(sce, organism="hsa", ncores=0, min.pairs= -1, verbose=FALSE, iter=10, min.iter=100 ))
 })

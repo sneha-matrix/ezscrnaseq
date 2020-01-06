@@ -35,3 +35,9 @@ test_that("non mito genes", {
 		verbose=FALSE)
   expect_equal(sce1, sce2)
 })
+
+
+test_that("ncore=0", { 
+  expect_error(qc_metrics(sce, sym_col="Gene", by_nmads=TRUE, thresholds=c(3,3,3), ncores=0, plot=FALSE, write=FALSE, 
+		verbose=FALSE))
+})

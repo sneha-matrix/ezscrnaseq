@@ -32,7 +32,14 @@ test_that("default vs user provided args", {
   expect_equal(sce1, sce2)
 
   #negative test for min.size > max.size	
-  expect_error(size_factors(sce, min.size=500, max.size=5, min.mean=0, ncores=1, method="mycluster", plot=FALSE, verbose=FALSE))
+  expect_error(size_factors(sce, min.size=500, max.size=5, min.mean=0, ncores=1, method="mycluster", plot=FALSE))
+  # min.mean < 0
+  expect_error(size_factors(sce, min.size=500, max.size=500, ncores=1 , seed=1 , min.mean= -1, plot=FALSE))
+  # ncores = 0
+  expect_error(size_factors(sce, min.size=500, max.size=500, ncores=0 , seed=1 , min.mean= 0, plot=FALSE))
+  # seed =0
+  expect_error(size_factors(sce, min.size=500, max.size=500, ncores=1 , seed=0 , min.mean= 1, plot=FALSE))
+
 })
 
 

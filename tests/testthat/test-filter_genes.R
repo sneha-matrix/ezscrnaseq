@@ -18,6 +18,9 @@ test_that("defult ncore=1", {
   expect_equal(sce1, sce2)
 })
 
-test_that("cutoff < 0", {
+test_that("negative tests", {
+  # negative cutoff	
   expect_error(sce1 <- filter_genes(sce, cutoff=-10.1, ncores=1, plot=FALSE, write=FALSE, verbose=FALSE))
+  # ncore = 0
+  expect_error(sce1 <- filter_genes(sce, cutoff=-10.1, ncores=0, plot=FALSE, write=FALSE, verbose=FALSE))
 })

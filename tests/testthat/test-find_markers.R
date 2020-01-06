@@ -6,7 +6,7 @@ test_that("find_markers", {
 
   sce2 <- scater::logNormCounts(sce1)
   metadata(sce2)$log.exprs.offset <- 1
-  trend <- tech_trend(sce2, span=1, plot=FALSE)
+  trend <- tech_trend(sce2, plot=FALSE)
   expect_warning(set.seed(seed = 100, sample.kind = "Rounding"))
   expect_warning(sce3 <- denoisePCA(sce2, technical=trend, assay.type="logcounts", max.rank=100))
 

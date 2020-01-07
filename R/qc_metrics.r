@@ -25,7 +25,7 @@
 qc_metrics <- function(sce, sym_col="symbol", by_nmads=TRUE, thresholds=c(3,3,3), ncores=1, prefix=NULL, plot=TRUE, write=TRUE, 
 			verbose=TRUE){
 
-  stopifnot(ncores > 0)
+  stopifnot(ncores > 0, class(verbose)=="logical", class(plot)=="logical", class(write)=="logical" )
   # specifying the mitochodial genes
   is.mito <- grepl("^(M|m)(T|t)-", rowData(sce)[, sym_col])
   n_mito <- sum(is.mito)

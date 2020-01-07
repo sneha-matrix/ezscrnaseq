@@ -95,4 +95,6 @@ test_that("negative tests",{
   expect_error(ezcyclone(sce, organism="hsa", ncores=1, min.pairs= -1, verbose=FALSE, iter=10, min.iter=100 ))
   #ncore=0
   expect_error(ezcyclone(sce, organism="hsa", ncores=0, min.pairs= -1, verbose=FALSE, iter=10, min.iter=100 ))
+  #verbose not logical
+  expect_error(ezcyclone(sce, organism="hsa", ncores=1, min.pairs=5, verbose=1, iter=100, min.iter=10 ))
 })

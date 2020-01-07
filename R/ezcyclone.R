@@ -18,7 +18,8 @@ ezcyclone <- function(sce, organism=c("hsa", "mmu"), gene.names=NULL, pairs=NULL
   
   organism <- match.arg(organism)
 
-  stopifnot(nrow(pairs$G1) > 0, nrow(pairs$S) > 0, nrow(pairs$G2M) > 0, ncores > 0, iter >= min.iter, min.pairs >0)
+  stopifnot(nrow(pairs$G1) > 0, nrow(pairs$S) > 0, nrow(pairs$G2M) > 0, ncores > 0, iter >= min.iter, min.pairs >0,
+		class(verbose) == "logical")
   if (is.null(gene.names)){
       gene.names=rownames(sce)
    } else {

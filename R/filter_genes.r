@@ -10,7 +10,7 @@
 
 filter_genes <- function(sce, cutoff=0, ncores=1, prefix=NULL, plot=TRUE, write=TRUE, verbose=TRUE){
 
-  stopifnot(cutoff >= 0, ncores > 0)
+  stopifnot(cutoff >= 0, ncores > 0, class(verbose)=="logical", class(plot)=="logical", class(write)=="logical" )
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
   bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)
   BiocParallel::register(bpstart(bp))

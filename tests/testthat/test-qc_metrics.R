@@ -37,7 +37,12 @@ test_that("non mito genes", {
 })
 
 
-test_that("ncore=0", { 
+test_that("negative test", { 
+  #ncore =0 
   expect_error(qc_metrics(sce, sym_col="Gene", by_nmads=TRUE, thresholds=c(3,3,3), ncores=0, plot=FALSE, write=FALSE, 
 		verbose=FALSE))
+  # logical tests for argument 
+  expect_error(qc_metrics(sce, sym_col="Gene", by_nmads=TRUE, thresholds=c(3,3,3), ncores=1, plot=1))
+  expect_error(qc_metrics(sce, sym_col="Gene", by_nmads=TRUE, thresholds=c(3,3,3), ncores=1, write=1))
+  expect_error(qc_metrics(sce, sym_col="Gene", by_nmads=TRUE, thresholds=c(3,3,3), ncores=1, verbose=1))
 })

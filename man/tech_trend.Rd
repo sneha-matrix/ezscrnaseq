@@ -7,11 +7,9 @@
 tech_trend(
   sce,
   dispersion = 0,
-  span = 0.4,
-  block = NA,
-  design = NA,
   assay_type = "logcounts",
   ncores = 1,
+  size.factors = 1,
   prefix = NULL,
   plot = TRUE
 )
@@ -22,17 +20,11 @@ tech_trend(
 \item{dispersion}{A numeric scalar specifying the dispersion for the NB distribution.
 If zero, a Poisson distribution is used.}
 
-\item{span}{the parameter \eqn{\alpha} which controls the degree of
-    smoothing.}
-
-\item{block}{A factor specifying the blocking levels for each cell in \code{x}.
-If specified, variance modelling is performed separately within each block and statistics are combined across blocks.}
-
-\item{design}{A numeric matrix containing blocking terms for uninteresting factors of variation.}
-
 \item{assay_type}{A string specifying which assay values to use, e.g., "counts" or "logcounts".}
 
 \item{ncores}{Number of cores.}
+
+\item{size.factors}{A numeric vector of size factors.}
 
 \item{prefix}{Prefix for file name for the QC metrics histograms.}
 

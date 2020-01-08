@@ -9,7 +9,7 @@ size_factors(
   min.size = 10,
   max.size = 3000,
   min.mean = 0.1,
-  method = c("igraph"),
+  method = "igraph",
   seed = 100,
   ncores = 1,
   prefix = NULL,

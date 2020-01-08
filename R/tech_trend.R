@@ -12,7 +12,7 @@
 
 tech_trend <- function(sce, dispersion=0, assay_type="logcounts", ncores=1, size.factors=1, prefix=NULL, plot=TRUE){
 			 
-
+  stopifnot(ncores > 0, dispersion >=0, size.factors >= 0, class(plot)=="logical")
   # no spike ref: https://github.com/MarioniLab/scran/issues/7
   # according to scran::multiBlockVar(), use logcounts for tech trend
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")

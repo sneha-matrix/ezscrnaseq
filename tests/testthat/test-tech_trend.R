@@ -13,6 +13,23 @@ test_that("default", {
   metadata(sce2)$log.exprs.offset <- 1
   trend2 <- tech_trend(sce2, ncores=2, plot=FALSE)
   expect_equal(trend1, trend2 )
+
+  #test for ncores
+  trend1 <- tech_trend(sce2, ncores=1, plot=FALSE)
+  trend2 <- tech_trend(sce2, ncores=2, plot=FALSE)
+  expect_equal(trend1, trend2 )
+  # test for default dispersion	
+  trend1 <- tech_trend(sce2, ncores=1, plot=FALSE)
+  trend2 <- tech_trend(sce2, dispersion=0, ncores=1, plot=FALSE)
+  expect_equal(trend1, trend2 )
+  # test for assay_type
+  trend1 <- tech_trend(sce2, dispersion=0, ncores=1, plot=FALSE)
+  trend2 <- tech_trend(sce2, dispersion=0, assay_type="logcounts", ncores=1, plot=FALSE)
+  expect_equal(trend1, trend2 )
+  # test for size.factors 
+  trend1 <- tech_trend(sce2, dispersion=0, assay_type="logcounts", ncores=1, plot=FALSE)
+  trend2 <- tech_trend(sce2, dispersion=0, , size.factors=1, assay_type="logcounts", ncores=1, plot=FALSE)
+  expect_equal(trend1, trend2 )
 })
 
 

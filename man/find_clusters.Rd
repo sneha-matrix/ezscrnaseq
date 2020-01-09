@@ -10,7 +10,7 @@ find_clusters(
   seed = 100,
   snn_k = 10,
   ncores = 1,
-  method = "walktrap",
+  method = c("walktrap", "spinglass"),
   steps = 4,
   spins = 25,
   min_member = 20,
@@ -30,7 +30,8 @@ find_clusters(
 
 \item{ncores}{Number of cores.}
 
-\item{method}{"walktrap" or "spinglass" for finding communities in graphs via short random walks or a spin-glass model and simulated annealing.}
+\item{method}{"walktrap" or "spinglass" for finding communities in graphs via short random walks or a spin-glass model
+and simulated annealing.}
 
 \item{steps}{The length of the random walks to perform.}
 

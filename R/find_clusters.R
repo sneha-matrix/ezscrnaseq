@@ -5,7 +5,8 @@
 #' @param use_dimred A string specifying whether existing values in \code{reducedDims(sce)} should be used.
 #' @param seed Random seed.
 #' @param snn_k The number of nearest neighbors to consider during graph construction.
-#' @param method "walktrap" or "spinglass" for finding communities in graphs via short random walks or a spin-glass model and simulated annealing.
+#' @param method "walktrap" or "spinglass" for finding communities in graphs via short random walks or a spin-glass model
+#' and simulated annealing.
 #' @param min_member Minimal number of cluster members.
 #' @inheritParams qc_metrics
 #' @inheritParams scran::buildSNNGraph
@@ -14,10 +15,13 @@
 #' @return A SingleCellExperiment object with cell cluster information.
 #' @export
 
-find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, method="walktrap", steps=4, spins=25, 
-                          min_member=20, prefix=NULL, plot=TRUE, verbose=TRUE){
+find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, method=c("walktrap", "spinglass"), steps=4, 
+                          spins=25, min_member=20, prefix=NULL, plot=TRUE, verbose=TRUE){
+  
+  method <- match.arg(method)
+  stopifnot(is.logical(verbose), is.logical(plot), ncores > 0, seed > 1, snn_k > 1, steps > 1, spins > 1 , min_member >1)
 
-  suppressWarnings(set.seed(seed = 100, sample.kind = "Rounding"))
+  suppressWarnings(set.seed(seed = seed, sample.kind = "Rounding"))
 
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
   bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)
@@ -55,7 +59,8 @@ find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, m
   if (plot){
     grDevices::pdf(paste(c(prefix, "clusters_total_weights.pdf"), collapse="_"))
     on.exit(grDevices::dev.off())
-    pheatmap(ratio, scale="none", cluster_rows=FALSE, cluster_cols=FALSE, color=grDevices::colorRampPalette(c("white", "blue"))(100))
+    pheatmap(ratio, scale="none", cluster_rows=FALSE, cluster_cols=FALSE, color=grDevices::colorRampPalette(c("white", 
+			"blue"))(100))
   }
 
   # rm small clusters

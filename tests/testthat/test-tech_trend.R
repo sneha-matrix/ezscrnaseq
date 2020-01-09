@@ -28,8 +28,13 @@ test_that("default", {
   expect_equal(trend1, trend2 )
   # test for size.factors 
   trend1 <- tech_trend(sce2, dispersion=0, assay_type="logcounts", ncores=1, plot=FALSE)
-  trend2 <- tech_trend(sce2, dispersion=0, , size.factors=1, assay_type="logcounts", ncores=1, plot=FALSE)
+  trend2 <- tech_trend(sce2, dispersion=0, size.factors=1, assay_type="logcounts", ncores=1, plot=FALSE)
   expect_equal(trend1, trend2 )
+  #negative test
+  expect_error(tech_trend(sce2, dispersion=0, , size.factors=1, assay_type="logcounts", ncores=1, plot=1))
+  expect_error(tech_trend(sce2, dispersion=0, , size.factors=1, assay_type="logcounts", ncores=0))
+  expect_error(tech_trend(sce2, dispersion=0, , size.factors=-1))
+  expect_error(tech_trend(sce2, dispersion=-1))
 })
 
 

@@ -5,7 +5,6 @@
 #' @param clusters Vector specify cell clusters.
 #' @param annot gene annotation.
 #' @param block Vector specify blocking.
-#' @param design Design matirx.
 #' @param lfc Log fold-change.
 #' @param direction Direction of change.
 #' @param assay_type A string specifying which assay values to use, e.g., "counts" or "logcounts".
@@ -15,15 +14,22 @@
 #' @return A data.frame for the statistics and annotation of top marker geness
 #' @export
 
-find_markers <- function(sce, clusters, annot, block=NULL, design=NULL, pval.type="any", lfc=1, test.type="t",
-                          direction="up", assay_type="logcounts", ncores=1, fdr_cutoff=0.25, prefix=NULL, write=TRUE){
+find_markers <- function(sce, clusters, annot, block=NULL, lfc=1,  test.type=c("t", "wilcox", "binom"),
+                          direction=c("up", "down"),  pval.type=c("any", "all"), assay_type=c("logcounts", "counts"), 
+						  ncores=1, fdr_cutoff=0.25, prefix=NULL, write=TRUE){
+
+  direction <- match.arg(direction)
+  test.type <- match.arg(test.type)
+  pval.type <- match.arg(pval.type)
+  assay_type <- match.arg(assay_type)
+  stopifnot(ncores  > 0, is.numeric(lfc), is.logical(write), is.numeric(fdr_cutoff))
 
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
   bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)
-  register(bpstart(bp))
-  markers <- scran::findMarkers(sce, groups=clusters, block=block, design=design, pval.type=pval.type, lfc=lfc, 
+  BiocParallel::register(bpstart(bp))
+  markers <- scran::findMarkers(sce, groups=clusters, block=block, pval.type=pval.type, lfc=lfc, 
                          test.type=test.type, direction=direction, assay.type=assay_type, BPPARAM=bp)
-  bpstop(bp)
+  BiocParallel::bpstop(bp)
 
   clus <- names(markers)
   if (pval.type=="any"){

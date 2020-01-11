@@ -23,7 +23,8 @@ qc_metrics(
 
 \item{by_nmads}{TRUE/FASLE for using number of median absolute deviation as thresholds.}
 
-\item{thresholds}{Numbers of median absolute deviation if \code{by_nmads} is TRUE, otherwise the actual counts or percentages.}
+\item{thresholds}{Numbers of median absolute deviation if \code{by_nmads} is TRUE, otherwise the actual counts or
+percentages.}
 
 \item{ncores}{Number of cores.}
 
@@ -39,5 +40,6 @@ qc_metrics(
 A SingleCellExperiment object.
 }
 \description{
-Quality control on the cells i.e. filter cells by library sizes, number of expressed genes and mitochondrial gene proportion, visualize the QC metrics by histograms.
+Quality control on the cells i.e. filter cells by library sizes, number of expressed genes and mitochondrial gene
+proportion, visualize the QC metrics by histograms.
 }

@@ -37,8 +37,8 @@ test_that("default vs user provided args", {
   expect_error(size_factors(sce, min.size=500, max.size=500, ncores=1 , seed=1 , min.mean= -1, plot=FALSE))
   # ncores = 0
   expect_error(size_factors(sce, min.size=500, max.size=500, ncores=0 , seed=1 , min.mean= 0, plot=FALSE))
-  # seed =0
-  expect_error(size_factors(sce, min.size=500, max.size=500, ncores=1 , seed=0 , min.mean= 1, plot=FALSE))
+  # seed =abc
+  expect_error(size_factors(sce, min.size=500, max.size=500, ncores=1 , seed="abc" , min.mean= 1, plot=FALSE))
   # logical tests for argument 
   expect_error(size_factors(sce, plot=1)) 
   expect_error(size_factors(sce, verbose=1)) 

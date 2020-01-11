@@ -9,9 +9,9 @@ test_that("by_nmads", {
 })
 
 test_that("not_by_nmads", {
-  sce1 <- qc_metrics(sce, sym_col="Gene", by_nmads=FALSE, thresholds=c(14,10,17), plot=FALSE, write=FALSE, 
+  sce1 <- qc_metrics(sce, sym_col="Gene", by_nmads=FALSE, thresholds=c(90000,1200,50), plot=FALSE, write=FALSE, 
 		ncores=1, verbose=FALSE)
-  sce2 <- qc_metrics(sce, sym_col="Gene", by_nmads=FALSE, thresholds=c(14,10,17), plot=FALSE, write=FALSE, 
+  sce2 <- qc_metrics(sce, sym_col="Gene", by_nmads=FALSE, thresholds=c(90000,1200,50), plot=FALSE, write=FALSE, 
 		ncores=2, verbose=FALSE)
   expect_equal(sce1, sce2)
 })

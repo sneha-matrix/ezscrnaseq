@@ -23,7 +23,7 @@ test_that("default vs user input", {
   assignments2 <- ezcyclone(sce, organism="hsa", ncores=1, min.pairs=5, verbose=FALSE, iter=100, min.iter=10)
   expect_equal(assignments$phases, assignments2$phases)
 
-  #default seed vs user  provided  seed=110	
+  #default seed vs user  provided  seed=100	
   assignments <- ezcyclone(sce, min.pairs=5, verbose=FALSE, iter=100, min.iter=10)
   assignments2 <- ezcyclone(sce, organism="hsa", seed=100, min.pairs=5, verbose=FALSE, iter=100, min.iter=10)
   expect_equal(assignments$phases, assignments2$phases)
@@ -97,4 +97,6 @@ test_that("negative tests",{
   expect_error(ezcyclone(sce, organism="hsa", ncores=0, min.pairs= -1, verbose=FALSE, iter=10, min.iter=100 ))
   #verbose not logical
   expect_error(ezcyclone(sce, organism="hsa", ncores=1, min.pairs=5, verbose=1, iter=100, min.iter=10 ))
+  #seed not numeric
+  expect_error(ezcyclone(sce, organism="hsa", ncores=1, min.pairs=5, verbose=1, iter=100, min.iter=10, seed="abc"))
 })

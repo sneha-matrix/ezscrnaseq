@@ -59,7 +59,7 @@ test_that("ncores=2", {
   expect_error(find_clusters(sce1, ncores=1, verbose=1))
   expect_error(find_clusters(sce1, ncores=1, plot=1))
   expect_error(find_clusters(sce1, ncores=0, plot=FALSE, verbose=FALSE))
-  expect_error(find_clusters(sce1, ncores=1, seed=0, plot=FALSE, verbose=FALSE))
+  expect_error(find_clusters(sce1, ncores=1, seed="abc", plot=FALSE, verbose=FALSE))
   expect_error(find_clusters(sce1, ncores=1, snn_k=0, plot=FALSE, verbose=FALSE))
   expect_error(find_clusters(sce1, ncores=1, steps=0, plot=FALSE, verbose=FALSE))
   expect_error(find_clusters(sce1, ncores=1, spins=0, plot=FALSE, verbose=FALSE))

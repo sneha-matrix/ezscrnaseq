@@ -15,7 +15,7 @@ size_factors <- function(sce, min.size=10, max.size=3000, min.mean=0.1, method="
   				seed=100, ncores=1, prefix=NULL, plot=TRUE, verbose=TRUE){
 
   #method <- match.arg(method)
-  stopifnot(min.size <= max.size , ncores > 0, min.mean >=0, seed >0, is.logical(verbose), is.logical(plot))
+  stopifnot(min.size <= max.size , ncores > 0, min.mean >=0, is.numeric(seed), is.logical(verbose), is.logical(plot))
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
   bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)
   BiocParallel::register(bpstart(bp))

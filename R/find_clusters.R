@@ -19,16 +19,16 @@ find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, m
                           spins=25, min_member=20, prefix=NULL, plot=TRUE, verbose=TRUE){
   
   method <- match.arg(method)
-  stopifnot(is.logical(verbose), is.logical(plot), ncores > 0, seed > 1, snn_k > 1, steps > 1, spins > 1 , min_member >1)
+  stopifnot(is.logical(verbose), is.logical(plot), ncores > 0, is.numeric(seed), snn_k > 1, steps > 1, spins > 1 , min_member >1)
 
   suppressWarnings(set.seed(seed = seed, sample.kind = "Rounding"))
 
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
   bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)
-  register(bpstart(bp))
+  BiocParallel::register(bpstart(bp))
   # snn
   snn_gr <- scran::buildSNNGraph(sce, use.dimred=use_dimred, k=snn_k, BPPARAM=bp)
-  bpstop(bp)
+  BiocParallel::bpstop(bp)
 
   # cluster
   if(method=="walktrap"){
@@ -42,18 +42,18 @@ find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, m
   nc <- table(sce$Cluster)
 
   if (verbose){
-    cat("Clusters found:\n")
+    message("Clusters found:\n")
     print(kable(nc))
   }
 
 
   # modularity score
   ms <- igraph::modularity(cluster_out)
-  if (verbose) cat("\nModularity score: ", ms, "\n")
+  if (verbose) message("\nModularity score: ", ms, "\n")
 
   # total weight between nodes
   #mod_out <- clusterModularity(snn_gr, sce$Cluster, get.values=TRUE)
-  mod_out <- clusterModularity(snn_gr, sce$Cluster, get.weights=TRUE)
+  mod_out <- scran::clusterModularity(snn_gr, sce$Cluster, get.weights=TRUE)
   ratio <- log2(mod_out$observed / mod_out$expected + 1)
 
   if (plot){
@@ -66,7 +66,7 @@ find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, m
   # rm small clusters
   num_small <- sum(nc < min_member)
   if(num_small > 0){
-    if (verbose) cat("Removeing", num_small, "clusters that have cells less than", min_member, "\n")
+    if (verbose) message("Removeing", num_small, "clusters that have cells less than", min_member, "\n")
     sce <- sce[, sce$Cluster %in% names(nc)[nc >=min_member]]
     sce$Cluster <- droplevels(sce$Cluster)
   }

@@ -1,5 +1,5 @@
 # ezscrnaseq
-Functions for single cell RNA-seq analysis
+Functions for single cell RNA-seq analysis, based on workflow at https://f1000research.com/articles/5-2122/v2.
 
 [![Build Status](https://travis-ci.org/jdreyf/ezscrnaseq.svg?branch=master)](https://travis-ci.org/jdreyf/ezscrnaseq)
 [![Coverage Status](https://img.shields.io/codecov/c/github/jdreyf/ezscrnaseq/master.svg)](https://codecov.io/github/jdreyf/ezscrnaseq?branch=master)

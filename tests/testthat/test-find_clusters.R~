@@ -67,6 +67,6 @@ test_that("truth table", {
   expect_warning(set.seed(seed = seed, sample.kind = "Rounding"))
   expect_warning(sce1 <- denoisePCA(sce1, technical=trend, assay.type="logcounts", max.rank=100))
   sceclust1 <- find_clusters(sce1, snn_k=2, ncores=2, plot=FALSE , min_member=2, verbose=FALSE)
-  expect_true(all(as.character(sceclust1$Cluster) == c(rep("clus_1", times=5), rep("clus_2", times=5))) || 
-  all(as.character(sceclust1$Cluster) == c(rep("clus_2", times=5), rep("clus_1", times=5))))
+  expect_equal(sort(as.character(sceclust1$Cluster)) , c(rep("clus_1", times=5), rep("clus_2", times=5))) 
+
 })

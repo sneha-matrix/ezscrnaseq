@@ -31,7 +31,7 @@ test_that("negative tests", {
 test_that("truth table", {
 
   sc <- matrix(0, nrow = 200, ncol = 10)
-  colnames(sc)<-c(rep(paste0("Cell_",1:10), times=1))
+  colnames(sc) <- c(paste0("Cell_",1:10))
   sc[1:100, 1:5] <- 3
   sc[101:200, 6:10] <- 7
   sc[1:3,]<-0

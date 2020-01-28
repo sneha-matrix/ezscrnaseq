@@ -59,14 +59,14 @@ find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, m
   if (plot){
     grDevices::pdf(paste(c(prefix, "clusters_total_weights.pdf"), collapse="_"))
     on.exit(grDevices::dev.off())
-    pheatmap(ratio, scale="none", cluster_rows=FALSE, cluster_cols=FALSE, color=grDevices::colorRampPalette(c("white", 
+    pheatmap::pheatmap(ratio, scale="none", cluster_rows=FALSE, cluster_cols=FALSE, color=grDevices::colorRampPalette(c("white", 
 			"blue"))(100))
   }
 
   # rm small clusters
   num_small <- sum(nc < min_member)
   if(num_small > 0){
-    if (verbose) message("Removeing", num_small, "clusters that have cells less than", min_member, "\n")
+    if (verbose) message("\nRemoving ", num_small, " clusters that have cells less than ", min_member, "\n")
     sce <- sce[, sce$Cluster %in% names(nc)[nc >=min_member]]
     sce$Cluster <- droplevels(sce$Cluster)
   }

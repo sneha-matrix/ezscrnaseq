@@ -44,7 +44,7 @@ size_factors <- function(sce, min.size=10, max.size=3000, min.mean=0.1, method="
 
   #rm zero size factors
   if (any(sizeFactors(sce)==0)){
-    if (verbose) cat("\nRemoveing", sum(sizeFactors(sce)==0), "cells that have size factor of zero.\n")
+    if (verbose) message("\nRemoving", sum(sizeFactors(sce)==0), "cells that have size factor of zero.\n")
     sce <- sce[, sizeFactors(sce) > 0, drop=FALSE]
   }
 

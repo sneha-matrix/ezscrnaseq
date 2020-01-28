@@ -30,10 +30,8 @@ test_that("negative tests", {
 })
 test_that("truth table", {
 
-  expect_warning(data("sc_example_counts"))
-  sc_example_counts_shift <- sc_example_counts
-  sc <- sc_example_counts_shift[1:200,1:10]
-  sc[sc > 0]<-0
+  sc <- matrix(0, nrow = 200, ncol = 10)
+  colnames(sc)<-c(rep(paste0("Cell_",1:10), times=1))
   sc[1:100, 1:5] <- 3
   sc[101:200, 6:10] <- 7
   sc[1:3,]<-0

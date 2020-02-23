@@ -43,7 +43,7 @@ qc_metrics <- function(sce, sym_col="symbol", by_nmads=TRUE, thresholds=c(3,3,3)
 
   # qc calculation
   if (by_nmads) {
-    if (any(thresholds > 5)) stop("Thresholds are too big for unsing MAD")
+    if (any(thresholds > 5)) stop("Thresholds are too big for unsing NMADS")
     #libsize.drop <- isOutlier(sce$total_counts, nmads=thresholds[1], type="lower", log=TRUE)
     #feature.drop <- isOutlier(sce$total_features_by_counts, nmads=thresholds[2], type="lower", log=TRUE)
     libsize.drop <- isOutlier(sce1$sum, nmads=thresholds[1], type="lower", log=TRUE)

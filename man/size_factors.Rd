@@ -10,6 +10,7 @@ size_factors(
   max.size = 3000,
   min.mean = 0.1,
   method = "igraph",
+  group.col = NULL,
   seed = 100,
   ncores = 1,
   prefix = NULL,
@@ -29,6 +30,8 @@ Only used when \code{use.ranks=TRUE}, see \code{?\link[scran]{scaledColRanks}} f
 
 \item{method}{String specifying the clustering method to use.
 \code{"hclust"} uses hierarchical clustering while \code{"igraph"} uses graph-based clustering.}
+
+\item{group.col}{column name of the groups.}
 
 \item{seed}{Random seed.}
 

@@ -23,7 +23,8 @@ Imports:
     BiocParallel,
     igraph,
     scales,
-    stats
+    stats,
+    reshape2
 Suggests: 
     devtools,
 	ezlimma,

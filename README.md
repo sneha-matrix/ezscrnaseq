@@ -1,5 +1,5 @@
 # ezscrnaseq
-Functions for single cell RNA-seq analysis
+Functions for single cell RNA-seq analysis, based on workflow at https://f1000research.com/articles/5-2122/v2.
 
 [![Build Status](https://travis-ci.org/sneha-matrix/ezscrnaseq.svg?branch=master)](https://travis-ci.org/sneha-matrix/ezscrnaseq)
 [![Coverage Status](https://img.shields.io/codecov/c/github/sneha-matrix/ezscrnaseq/master.svg)](https://codecov.io/github/sneha-matrix/ezscrnaseq?branch=master)
@@ -8,4 +8,5 @@ Functions for single cell RNA-seq analysis
 ## Install
 library(remotes)  
 
-remotes::install_github(repo="sneha-matrix/ezscrnaseq", build_opts = c("--no-resave-data", "--no-manual"))
+
+remotes::install_github(repo="jdreyf/ezscrnaseq", build_opts = c("--no-resave-data", "--no-manual"))

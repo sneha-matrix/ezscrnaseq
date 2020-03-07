@@ -44,5 +44,35 @@ test_that("default vs user provided args", {
   expect_error(size_factors(sce, verbose=1)) 
 })
 
+test_that("truth table", {
+ sc <- matrix(sample(0:200, 2000, replace=T), nrow = 200, ncol = 10)
+ colnames(sc) <- c(paste0("Cell_",1:10))
+ row.names(sc) <- row.names(sce)[1:200]
+ sc[1:100,1:5] <- 7
+ sc[101:200,6:10] <- 3
+ sc[1:100,6:10] <- 17
+ sc[101:200,1:5] <- 13
 
+  scVar <- sc
+  itr <- round(runif(1) * 100)
+  for(n in 1:itr)
+  {
+    i <- sample(1:200, 1, replace=T) # row number
+    j <- sample(1:10, 1, replace=T) #col number
+    v <- sample(1:10, 1, replace=T) # value to instert
+    scVar[i,j] <- v
+  }
+  scVar1 <- SingleCellExperiment(assays = list(counts = scVar))
+  sce1 <- size_factors(scVar1, min.size=5, min.mean=0, ncores=2, plot=FALSE, verbose=FALSE)
+  size.factor <- sizeFactors(sce1)
+  expect_true(size.factor[1] < 1)
+  expect_true(size.factor[2] < 1)
+  expect_true(size.factor[3] < 1)
+  expect_true(size.factor[4] < 1)
+  expect_true(size.factor[5] < 1)
+  expect_true(size.factor[6] > 1)
+  expect_true(size.factor[8] > 1)
+  expect_true(size.factor[9] > 1)
+  expect_true(size.factor[10] > 1)
+})
 

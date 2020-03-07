@@ -38,14 +38,14 @@ size_factors <- function(sce, min.size=10, max.size=3000, min.mean=0.1, method="
 
   if (verbose){
     message("\nSummary of size factors:\n")
-    print(summary(SingleCellExperiment::sizeFactors(sce)))
+    print(summary(sizeFactors(sce)))
   }
 
 
   #rm zero size factors
-  if (any(SingleCellExperiment::sizeFactors(sce)==0)){
-    if (verbose) message("\nRemoving", sum(SingleCellExperiment::sizeFactors(sce)==0), "cells that have size factor of zero.\n")
-    sce <- sce[, SingleCellExperiment::sizeFactors(sce) > 0, drop=FALSE]
+  if (any(sizeFactors(sce)==0)){
+    if (verbose) message("\nRemoving", sum(sizeFactors(sce)==0), "cells that have size factor of zero.\n")
+    sce <- sce[, sizeFactors(sce) > 0, drop=FALSE]
   }
 
   # scatter not working sce$total_counts is always NULL may be decrypted
@@ -58,13 +58,13 @@ size_factors <- function(sce, min.size=10, max.size=3000, min.mean=0.1, method="
     if (!is.null(group.col)){
       cols <- as.numeric(as.factor(colData(sce)[, group.col]))+1
       if(max(cols) > 8) stop("Group number can't be more than 8.")
-      graphics::plot(SingleCellExperiment::sizeFactors(sce), sce$total_counts/1e3, log="xy", ylab="Library size (thousands)", 
+      graphics::plot(sizeFactors(sce), sce$total_counts/1e3, log="xy", ylab="Library size (thousands)", 
 			xlab="Size factor", main="Size factors from deconvolution", 
 			col=scales::alpha(grDevices::palette()[cols], 0.3), pch=16)
       legd <- sort(unique(colData(sce)[, group.col]))
       graphics::legend("topleft", col=2:(length(legd)+1), pch=16, cex=1.2, legend=legd)
     } else {
-      graphics::plot(SingleCellExperiment::sizeFactors(sce), sce$total_counts/1e3, log="xy", ylab="Library size (thousands)", 
+      graphics::plot(sizeFactors(sce), sce$total_counts/1e3, log="xy", ylab="Library size (thousands)", 
 			xlab="Size factor", main="Size factors from deconvolution", 
 			col= scales::alpha(grDevices::palette()[1], 0.3), pch=16)
     }

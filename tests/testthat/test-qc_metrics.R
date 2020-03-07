@@ -78,19 +78,18 @@ test_that("truth table", {
   rowData(scVar1) <- rowDataSc		
   expect_warning(sce1 <- qc_metrics(scVar1, sym_col="Gene", by_nmads=TRUE, thresholds=c(3,3,3), ncores=1, plot=FALSE, write=FALSE, 
 		verbose=FALSE))
-  expect_true(dim(sce1)[1] < dim(scVar1)[1])
+  expect_lte(nrow(sce1)+2, nrow(scVar1))
  
   #not_by_nmads
   sce1 <- qc_metrics(scVar1, sym_col="Gene", by_nmads=FALSE, thresholds=c(198700,1980,800), plot=FALSE, write=FALSE, 
 		ncores=1, verbose=FALSE)
-  expect_true(dim(sce1)[1] < dim(scVar1)[1])
+  expect_lte(nrow(sce1)+2, nrow(scVar1))
 
   #non mito genes
   sceNew <- scVar1
   rowData(sceNew)[, "Gene"] <- row.names(scVar1)
   expect_warning(sce1 <- qc_metrics(sceNew, sym_col="Gene", by_nmads=TRUE, thresholds=c(3,3,3), ncores=1, plot=FALSE, write=FALSE, 
 		verbose=FALSE))
-  expect_true(dim(sce1)[1] < dim(scVar1)[1])
-
+  expect_lte(nrow(sce1)+2, nrow(scVar1))
 })
 

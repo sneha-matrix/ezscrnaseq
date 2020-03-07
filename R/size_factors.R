@@ -2,7 +2,7 @@
 #'
 #' Calculate deconvolving size factors from cell pools using \pkg{ scran} \code{computeSumFactors}
 #'
-
+#' @param group.col column name of the grouping variable on the samples in colData(sce).
 #' @param max.size Maximum cluster size.
 #' @param seed Random seed.
 #' @inheritParams qc_metrics
@@ -11,7 +11,7 @@
 #' @return A SingleCellExperiment object with size factors.
 #' @export
 
-size_factors <- function(sce, min.size=10, max.size=3000, min.mean=0.1, method="igraph",
+size_factors <- function(sce, min.size=10, max.size=3000, min.mean=0.1, method="igraph",  group.col=NULL,
   				seed=100, ncores=1, prefix=NULL, plot=TRUE, verbose=TRUE){
 
   #method <- match.arg(method)

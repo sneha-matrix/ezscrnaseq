@@ -13,11 +13,11 @@ filter_genes <- function(sce, cutoff=0, ncores=1, prefix=NULL, plot=TRUE, write=
   stopifnot(cutoff >= 0, ncores > 0, is.logical(verbose), is.logical(plot), is.logical(write))
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
   bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)
-  BiocParallel::register(bpstart(bp))
-  rowData(sce)$ave.count <- scater::calculateAverage(sce, BPPARAM=bp)
+  BiocParallel::register(BiocParallel::bpstart(bp))
+  SummarizedExperiment::rowData(sce)$ave.count <- scater::calculateAverage(sce, BPPARAM=bp)
   BiocParallel::bpstop(bp)
 
-  keep <- rowData(sce)$ave.count > cutoff
+  keep <- SummarizedExperiment::rowData(sce)$ave.count > cutoff
   n_keep <- sum(keep)
   if (verbose) message("\nNumber of genes kept:", n_keep, "\n")
 
@@ -25,8 +25,8 @@ filter_genes <- function(sce, cutoff=0, ncores=1, prefix=NULL, plot=TRUE, write=
     grDevices::pdf(paste(c(prefix, "average_counts.pdf"), collapse="_"))
     on.exit(grDevices::dev.off())
 
-    graphics::hist(log10(rowData(sce)$ave.count), breaks=100, main="", col="grey", xlab=expression(Log[10]~"average count"))
-    if (cutoff > min(rowData(sce)$ave.count)) graphics::abline(v=log10(cutoff), lty=2)
+    graphics::hist(log10(SummarizedExperiment::rowData(sce)$ave.count), breaks=100, main="", col="grey80", xlab=expression(Log[10]~"average count"))
+    if (cutoff > min(SummarizedExperiment::rowData(sce)$ave.count)) graphics::abline(v=log10(cutoff), lty=2, col="red")
   }
 
   g2k <- as.data.frame(table(keep))

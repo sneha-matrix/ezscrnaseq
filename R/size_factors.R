@@ -19,7 +19,7 @@ size_factors <- function(sce, min.size=10, max.size=3000, min.mean=0.1, method="
   stopifnot(min.size <= max.size , ncores > 0, min.mean >=0, is.numeric(seed), is.logical(verbose), is.logical(plot))
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
   bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)
-  BiocParallel::register(bpstart(bp))
+  BiocParallel::register(BiocParallel::bpstart(bp))
 
   suppressWarnings(set.seed(seed = seed, sample.kind = "Rounding"))
   suppressWarnings(clusters <- scran::quickCluster(sce, min.size=min.size, min.mean=min.mean, method=method,
@@ -30,7 +30,7 @@ size_factors <- function(sce, min.size=10, max.size=3000, min.mean=0.1, method="
 
   if (verbose){
     message("\nNumber of cells in clusters:\n")
-    print(kable(table(clusters)))
+    print(knitr::kable(table(clusters)))
   }
 
   sce <- scran::computeSumFactors(sce, cluster=clusters, max.cluster.size=max.size, min.mean=min.mean, positive=TRUE,
@@ -39,33 +39,33 @@ size_factors <- function(sce, min.size=10, max.size=3000, min.mean=0.1, method="
 
   if (verbose){
     message("\nSummary of size factors:\n")
-    print(summary(sizeFactors(sce)))
+    print(summary(SingleCellExperiment::sizeFactors(sce)))
   }
 
 
   #rm zero size factors
-  if (any(sizeFactors(sce)==0)){
-    if (verbose) message("\nRemoving", sum(sizeFactors(sce)==0), "cells that have size factor of zero.\n")
-    sce <- sce[, sizeFactors(sce) > 0, drop=FALSE]
+  if (any(SingleCellExperiment::sizeFactors(sce)==0)){
+    if (verbose) message("\nRemoving", sum(SingleCellExperiment::sizeFactors(sce)==0), "cells that have size factor of zero.\n")
+    sce <- sce[, SingleCellExperiment::sizeFactors(sce) > 0, drop=FALSE]
   }
 
-  # scatter not working sce$total_counts is always NULL may be decrypted
+
   if (plot){
-    if (is.null(sce$total_counts)) stop("Total counts are not calculated yet.")
-   # @param group.col column name of the grouping variable on the samples in colData(sce). Not working
+    if (is.null(sce$sum)) stop("Total counts are not calculated yet.")
+
     grDevices::pdf(paste(c(prefix, "size_factor_scatter.pdf"), collapse="_"))
     on.exit(grDevices::dev.off())
 
     if (!is.null(group.col)){
-      cols <- as.numeric(as.factor(colData(sce)[, group.col]))+1
+      cols <- as.numeric(as.factor(SingleCellExperiment::colData(sce)[, group.col]))+1
       if(max(cols) > 8) stop("Group number can't be more than 8.")
-      graphics::plot(sizeFactors(sce), sce$total_counts/1e3, log="xy", ylab="Library size (thousands)",
+      graphics::plot(SingleCellExperiment::sizeFactors(sce), sce$sum/1e3, log="xy", ylab="Library size (thousands)",
 			xlab="Size factor", main="Size factors from deconvolution",
 			col=scales::alpha(grDevices::palette()[cols], 0.3), pch=16)
-      legd <- sort(unique(colData(sce)[, group.col]))
+      legd <- sort(unique(SingleCellExperiment::colData(sce)[, group.col]))
       graphics::legend("topleft", col=2:(length(legd)+1), pch=16, cex=1.2, legend=legd)
     } else {
-      graphics::plot(sizeFactors(sce), sce$total_counts/1e3, log="xy", ylab="Library size (thousands)",
+      graphics::plot(SingleCellExperiment::sizeFactors(sce), sce$sum/1e3, log="xy", ylab="Library size (thousands)",
 			xlab="Size factor", main="Size factors from deconvolution",
 			col= scales::alpha(grDevices::palette()[1], 0.3), pch=16)
     }

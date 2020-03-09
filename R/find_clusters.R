@@ -15,9 +15,9 @@
 #' @return A SingleCellExperiment object with cell cluster information.
 #' @export
 
-find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, method=c("walktrap", "spinglass"), steps=4, 
+find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, method=c("walktrap", "spinglass"), steps=4,
                           spins=25, min_member=20, prefix=NULL, plot=TRUE, verbose=TRUE){
-  
+
   method <- match.arg(method)
   stopifnot(is.logical(verbose), is.logical(plot), ncores > 0, is.numeric(seed), snn_k > 1, steps > 1, spins > 1 , min_member >1)
 
@@ -25,7 +25,7 @@ find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, m
 
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
   bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)
-  BiocParallel::register(bpstart(bp))
+  BiocParallel::register(BiocParallel::bpstart(bp))
   # snn
   snn_gr <- scran::buildSNNGraph(sce, use.dimred=use_dimred, k=snn_k, BPPARAM=bp)
   BiocParallel::bpstop(bp)
@@ -43,7 +43,7 @@ find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, m
 
   if (verbose){
     message("Clusters found:\n")
-    print(kable(nc))
+    print(knitr::kable(nc))
   }
 
 
@@ -59,7 +59,7 @@ find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, m
   if (plot){
     grDevices::pdf(paste(c(prefix, "clusters_total_weights.pdf"), collapse="_"))
     on.exit(grDevices::dev.off())
-    pheatmap::pheatmap(ratio, scale="none", cluster_rows=FALSE, cluster_cols=FALSE, color=grDevices::colorRampPalette(c("white", 
+    pheatmap::pheatmap(ratio, scale="none", cluster_rows=FALSE, cluster_cols=FALSE, color=grDevices::colorRampPalette(c("white",
 			"blue"))(100))
   }
 

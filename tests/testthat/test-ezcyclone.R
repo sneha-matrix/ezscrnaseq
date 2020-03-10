@@ -100,3 +100,21 @@ test_that("negative tests",{
   #seed not numeric
   expect_error(ezcyclone(sce, organism="hsa", ncores=1, min.pairs=5, verbose=1, iter=100, min.iter=10, seed="abc"))
 })
+
+test_that("truth table", {
+  
+  sc <- matrix(sample(0:200, 12000, replace=T), nrow = 1200, ncol = 10)
+  colnames(sc) <- c(paste0("Cell_",1:10))
+  row.names(sc) <- row.names(sce)[1:1200] 
+  scVar1 <- SingleCellExperiment(assays = list(counts = sc))
+  G1<-1:3
+  S<-4:8
+  G2M<-9:10
+  pairs<-scran::sandbag(scVar1, list(G1=G1, S=S, G2M=G2M ))
+
+ assignments <- ezcyclone(scVar1, organism="hsa", ncores=1, min.pairs=5, verbose=FALSE, iter=100, min.iter=10, pairs=pairs)
+ assignments.2 <- cyclone(scVar1, pairs=pairs, min.pairs=5, verbose=FALSE, iter=100, min.iter=10)
+ expect_equal(assignments, assignments.2)
+
+})
+

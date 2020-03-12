@@ -8,6 +8,8 @@ tech_trend(
   sce,
   dispersion = 0,
   assay_type = "logcounts",
+  block = NULL,
+  design = NULL,
   ncores = 1,
   size.factors = 1,
   prefix = NULL,
@@ -21,6 +23,11 @@ tech_trend(
 If zero, a Poisson distribution is used.}
 
 \item{assay_type}{A string specifying which assay values to use, e.g., "counts" or "logcounts".}
+
+\item{block}{A factor specifying the blocking levels for each cell in \code{x}.
+If specified, variance modelling is performed separately within each block and statistics are combined across blocks.}
+
+\item{design}{A numeric matrix containing blocking terms for uninteresting factors of variation.}
 
 \item{ncores}{Number of cores.}
 

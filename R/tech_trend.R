@@ -32,8 +32,8 @@ tech_trend <- function(sce, dispersion=0, assay_type="logcounts", ncores=1, size
     on.exit(grDevices::dev.off())
 
     graphics::plot(var_fit$mean, var_fit$total, pch=16, cex=0.6, xlab="Mean log-expression", ylab="Variance of log-expression")
-    graphics::curve(var_fit_trend, col="dodgerblue", add=TRUE, lwd=2)
-    graphics::curve(var_fit$trend, col="red", add=TRUE, lwd=2)
+    graphics::curve(var_fit_trend(x), col="dodgerblue", add=TRUE, lwd=2)
+    graphics::curve(var_fit$trend(x), col="red", add=TRUE, lwd=2)
     graphics::legend("topright", legend=c("Technical noise", "All variance"), lty=1, lwd=2, col=c("dodgerblue", "red"))
   }
 

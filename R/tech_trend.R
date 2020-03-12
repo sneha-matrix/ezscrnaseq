@@ -6,13 +6,12 @@
 #' @inheritParams qc_metrics
 #' @inheritParams scran::makeTechTrend
 #' @inheritParams scran::modelGeneVar
-#' @inheritParams stats::loess
-#' @return A function accepting a mean log-expression as input and returning the variance of the log-expression as the output
+#' #' @return A function accepting a mean log-expression as input and returning the variance of the log-expression as the output
 #' @export
 
-tech_trend <- function(sce, dispersion=0, assay_type="logcounts", block=NULL, design=NULL, ncores=1, size.factors=1, prefix=NULL, plot=TRUE){
+tech_trend <- function(sce, dispersion=0, assay_type="logcounts", block=NULL, design=NULL, ncores=1, prefix=NULL, plot=TRUE){
 
-  stopifnot(ncores > 0, dispersion >=0, size.factors >= 0, is.logical(plot))
+  stopifnot(ncores > 0, dispersion >=0, is.logical(plot))
   # no spike ref: https://github.com/MarioniLab/scran/issues/7
   # according to scran::multiBlockVar(), use logcounts for tech trend
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
@@ -35,7 +34,7 @@ tech_trend <- function(sce, dispersion=0, assay_type="logcounts", block=NULL, de
 
     graphics::plot(var_tot$mean, var_tot$total, pch=16, cex=0.6, xlab="Mean log-expression", ylab="Variance of log-expression")
     graphics::curve(var_fit_trend, col="dodgerblue", add=TRUE, lwd=2)
-    graphics::curve(var_fit$trend, col="red", add=TRUE, lwd=2)
+    graphics::curve(var_fit$trend(x), col="red", add=TRUE, lwd=2)
     graphics::legend("topright", legend=c("Technical noise", "All variance"), lty=1, lwd=2, col=c("dodgerblue", "red"))
   }
 

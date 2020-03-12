@@ -11,7 +11,6 @@ tech_trend(
   block = NULL,
   design = NULL,
   ncores = 1,
-  size.factors = 1,
   prefix = NULL,
   plot = TRUE
 )
@@ -31,14 +30,9 @@ If specified, variance modelling is performed separately within each block and s
 
 \item{ncores}{Number of cores.}
 
-\item{size.factors}{A numeric vector of size factors.}
-
 \item{prefix}{Prefix for file name for the QC metrics histograms.}
 
 \item{plot}{TRUE/FASLE for whether plot the QC metrics histograms.}
-}
-\value{
-A function accepting a mean log-expression as input and returning the variance of the log-expression as the output
 }
 \description{
 Make a technical trend using \pkg{scran} \code{makeTechTrend} and decompose the gene-level variance using \pkg{scran} \code{modelGeneVar}.

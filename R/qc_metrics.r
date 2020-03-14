@@ -1,18 +1,18 @@
 #' Quality control on the cells
 #'
-#' Quality control on the cells i.e. filter cells by library sizes, number of expressed genes and mitochondrial gene 
+#' Quality control on the cells i.e. filter cells by library sizes, number of expressed genes and mitochondrial gene
 #' proportion, visualize the QC metrics by histograms.
 #'
 #' @param sce A SingleCellExperiment object containing expression values, usually counts.
 #' @param sym_col The column name for the gene symbols in \code{rowData(sce)}.
-#' @param by_nmads TRUE/FASLE for using number of median absolute deviation as thresholds.
-#' @param thresholds Numbers of median absolute deviation if \code{by_nmads} is TRUE, otherwise the actual counts or 
-#' percentages.
+#' @param by_nmads TRUE/FALSE; should number of median absolute deviation be used as thresholds?
+#' @param thresholds If \code{by_nmads} is TRUE, the number of median absolute deviations, which should not exceed 5;
+#' else the actual counts or percentages.
 #' @param ncores Number of cores.
 #' @param prefix Prefix for file name for the QC metrics histograms.
-#' @param plot TRUE/FASLE for whether plot the QC metrics histograms.
-#' @param write TRUE/FASLE for whether write the table of filtered cells.
-#' @param verbose TRUE/FASLE for specifying whether diagnostics should be printed to screen.
+#' @param plot TRUE/FALSE for whether to plot the QC metrics histograms.
+#' @param write TRUE/FALSE for whether to write the table of filtered cells.
+#' @param verbose TRUE/FALSE for specifying if diagnostics should be printed to screen.
 #' @import knitr
 #' @import SummarizedExperiment
 #' @import SingleCellExperiment
@@ -24,7 +24,7 @@
 #' @return A SingleCellExperiment object.
 #' @export
 
-qc_metrics <- function(sce, sym_col="symbol", by_nmads=TRUE, thresholds=c(3,3,3), ncores=1, prefix=NULL, plot=TRUE, write=TRUE, 
+qc_metrics <- function(sce, sym_col="symbol", by_nmads=TRUE, thresholds=c(3,3,3), ncores=1, prefix=NULL, plot=TRUE, write=TRUE,
 			verbose=TRUE){
 
   stopifnot(ncores > 0, is.logical(verbose), is.logical(plot), is.logical(write))
@@ -43,16 +43,14 @@ qc_metrics <- function(sce, sym_col="symbol", by_nmads=TRUE, thresholds=c(3,3,3)
 
   # qc calculation
   if (by_nmads) {
-    if (any(thresholds > 5)) stop("Thresholds are too big for unsing NMADS")
+    if (any(thresholds > 5)) stop("Thresholds are too big for using NMADS")
     #libsize.drop <- isOutlier(sce$total_counts, nmads=thresholds[1], type="lower", log=TRUE)
     #feature.drop <- isOutlier(sce$total_features_by_counts, nmads=thresholds[2], type="lower", log=TRUE)
     libsize.drop <- isOutlier(sce1$sum, nmads=thresholds[1], type="lower", log=TRUE)
     feature.drop <- isOutlier(sce1$detected, nmads=thresholds[2], type="lower", log=TRUE)
     if (n_mito >0) mito.drop <- suppressWarnings(isOutlier(sce1$subsets_Mt_sum, nmads=thresholds[3], type="higher"))
-
-  } else{
-    if(any(thresholds < 10)) stop("Thresholds are too small for unsing actual counts or percentages")
-
+  } else {
+    if(any(thresholds < 10)) stop("Thresholds are too small for using actual counts or percentages")
     libsize.drop <- sce1$sum < thresholds[1]
     feature.drop <- sce1$detected < thresholds[2]
     if (n_mito > 0) mito.drop <- sce1$subsets_Mt_sum > thresholds[3]
@@ -66,8 +64,7 @@ qc_metrics <- function(sce, sym_col="symbol", by_nmads=TRUE, thresholds=c(3,3,3)
     #                    Mito=min(sce$pct_counts_Mt[mito.drop]))
     cutoff <- data.frame(LibSize=max(sce1$subsets_Mt_sum[libsize.drop]), Feature=max(sce1$subsets_Mt_detected[feature.drop]),
                         Mito=min(sce1$subsets_Mt_sum[mito.drop]))
-
-  } else{
+  } else {
     qc <- data.frame(ByLibSize=sum(libsize.drop), ByFeature=sum(feature.drop), ByMito=0,
                      Remaining=sum(!(libsize.drop | feature.drop)))
     cutoff <- data.frame(LibSize=max(sce1$subsets_Mt_sum[libsize.drop]), Feature=max(sce1$subsets_Mt_detected[feature.drop]))
@@ -97,10 +94,11 @@ qc_metrics <- function(sce, sym_col="symbol", by_nmads=TRUE, thresholds=c(3,3,3)
     graphics::hist(sce$total_counts/1e3, xlab="Library sizes (thousands)", main="", breaks=30, col="grey80", ylab="Number of cells")
     graphics::abline(v=cutoff$LibSize[1]/1e3, lty=2)
 
-    graphics::hist(sce$total_features_by_counts, xlab="Number of expressed genes", main="", breaks=30, col="grey80", ylab="Number of cells")
+    graphics::hist(sce$total_features_by_counts, xlab="Number of expressed genes", main="", breaks=30, col="grey80",
+                   ylab="Number of cells")
     graphics::abline(v=cutoff$Feature[1], lty=2)
 
-    if (n_mito >0){
+    if (n_mito > 0){
       graphics::hist(sce$pct_counts_Mt, xlab="Mitochondrial proportion (%)", main="", breaks=30, col="grey80",  ylab="Number of cells")
       graphics::abline(v=cutoff$Mito[1], lty=2)
     }
@@ -113,6 +111,6 @@ qc_metrics <- function(sce, sym_col="symbol", by_nmads=TRUE, thresholds=c(3,3,3)
     keep <- !(libsize.drop | feature.drop)
   }
 
-  sce <- sce[keep, ]
+  sce <- sce[keep,, drop=FALSE]
   return(sce)
 }

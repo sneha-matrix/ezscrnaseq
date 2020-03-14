@@ -59,4 +59,6 @@ test_that("truth table", {
   sce1 <- scater::logNormCounts(scVar1)
   metadata(sce1)$log.exprs.offset <- 1
   expect_warning(trend2 <- tech_trend(sce1, plot=FALSE))
+  scran.trend <- scran::makeTechTrend(dispersion=0 , x= sce1)
+  expect_equal(trend2, scran.trend) 
 })

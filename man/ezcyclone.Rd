@@ -38,7 +38,7 @@ in pairs should overlap with \code{row.names(sce)}.}
 
 \item{min.pairs}{An integer scalar specifying the minimum number of pairs for cycle estimation.}
 
-\item{verbose}{TRUE/FASLE for specifying whether diagnostics should be printed to screen.}
+\item{verbose}{TRUE/FALSE for specifying if diagnostics should be printed to screen.}
 }
 \value{
 A list containing phases, scores, and normalized.scores.

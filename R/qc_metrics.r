@@ -6,8 +6,9 @@
 #' @param sce A SingleCellExperiment object containing expression values, usually counts.
 #' @param sym_col The column name for the gene symbols in \code{rowData(sce)}.
 #' @param by_nmads TRUE/FALSE; should number of median absolute deviation be used as thresholds?
-#' @param thresholds If \code{by_nmads} is TRUE, the number of median absolute deviations, which should not exceed 5;
-#' else the actual counts or percentages.
+#' @param thresholds Numeric vector of length 3. If \code{by_nmads} is `FALSE`, the elements represent thresholds for
+#' total number of reads, number of detected genes, percentage of mitochondrial genes. If \code{by_nmads} is `TRUE`,
+#' thresholds for all 3 elements is calculated in terms of number of median absolute deviations, which should not exceed 5.
 #' @param ncores Number of cores.
 #' @param prefix Prefix for file name for the QC metrics histograms.
 #' @param plot TRUE/FALSE for whether to plot the QC metrics histograms.

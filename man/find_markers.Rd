@@ -47,7 +47,7 @@ or a binomial test with \code{"binom"}.}
 
 \item{prefix}{Prefix for file name for the QC metrics histograms.}
 
-\item{write}{TRUE/FASLE for whether write the table of filtered cells.}
+\item{write}{TRUE/FALSE for whether to write the table of filtered cells.}
 }
 \value{
 A data.frame for the statistics and annotation of top marker geness

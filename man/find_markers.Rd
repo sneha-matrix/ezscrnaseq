@@ -13,7 +13,7 @@ find_markers(
   test.type = c("t", "wilcox", "binom"),
   direction = c("up", "down"),
   pval.type = c("any", "all"),
-  assay_type = c("logcounts", "counts"),
+  assay_type = c("logcounts", "counts", "corrected"),
   ncores = 1,
   fdr_cutoff = 0.25,
   prefix = NULL,

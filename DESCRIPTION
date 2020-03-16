@@ -11,6 +11,8 @@ Description: What the package does (one paragraph).
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Depends: 
+    R (>= 3.5.0)
 Imports:
     knitr,
     reshape2,
@@ -24,7 +26,8 @@ Imports:
     BiocParallel,
     igraph,
     scales,
-    stats
+    stats,
+    reshape2
 Suggests: 
     devtools,
 	ezlimma,

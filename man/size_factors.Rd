@@ -31,7 +31,8 @@ Only used when \code{use.ranks=TRUE}, see \code{?\link[scran]{scaledColRanks}} f
 \item{method}{String specifying the clustering method to use.
 \code{"hclust"} uses hierarchical clustering while \code{"igraph"} uses graph-based clustering.}
 
-\item{group.col}{column name of the grouping variable on the samples in colData(sce).}
+\item{group.col}{column name of the groups.}
+
 
 \item{seed}{Random seed.}
 

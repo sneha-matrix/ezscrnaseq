@@ -25,7 +25,7 @@ find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, m
 
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
   bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)
-  BiocParallel::register(bpstart(bp))
+  BiocParallel::register(BiocParallel::bpstart(bp))
   # snn
   snn_gr <- scran::buildSNNGraph(sce, use.dimred=use_dimred, k=snn_k, BPPARAM=bp)
   BiocParallel::bpstop(bp)
@@ -43,7 +43,7 @@ find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, m
 
   if (verbose){
     message("Clusters found:\n")
-    print(kable(nc))
+    print(knitr::kable(nc))
   }
 
   # modularity score

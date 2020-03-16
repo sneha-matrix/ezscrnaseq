@@ -52,10 +52,7 @@ test_that("truth table", {
   sc <- matrix(sample(0:200, 20000, replace=T), nrow = 2000, ncol = 10)
   colnames(sc) <- c(paste0("Cell_",1:10))
   row.names(sc) <- row.names(sce)
-  #sc[2,]<-220
-  sc[1,]<-0
-  sc[41,]<-0
-  #sc[42,]<-220
+
   rowDataSc<-rowData(sce)
   itr <- round(runif(1) * 100)
   for(n in 1:itr)
@@ -65,12 +62,16 @@ test_that("truth table", {
     sc[i,j] <- 0
   }
   itr <- round(runif(1) * 100)
-  for(n in 1:itr)
-  {
+  for(n in 1:itr)  {
     i <- sample(1:200, 1, replace=T) # row number
     j <- sample(1:10, 1, replace=T) #col number
     sc[i,j] <- 200
   }
+
+  sc[2,]<-220
+  sc[1,]<-0
+  sc[41,]<-0
+  sc[42,]<-220
   rowDataSc$BaseGeneMean <- apply(sc, 1, mean)
   rowDataSc$GeneMean <- apply(sc, 1, mean)
 
@@ -78,19 +79,21 @@ test_that("truth table", {
   rowData(scVar1) <- rowDataSc
   expect_warning(sce1 <- qc_metrics(scVar1, sym_col="Gene", by_nmads=TRUE, thresholds=c(3,3,3), ncores=1, plot=FALSE, write=FALSE,
 		verbose=FALSE))
-  expect_true(dim(sce1)[2] < dim(scVar1)[2])
+
+  expect_lte(dim(sce1)[1] , dim(scVar1)[1])
 
   #not_by_nmads
   sce1 <- qc_metrics(scVar1, sym_col="Gene", by_nmads=FALSE, thresholds=c(198700,1980,800), plot=FALSE, write=FALSE,
 		ncores=1, verbose=FALSE)
-  expect_true(dim(sce1)[2] < dim(scVar1)[2])
+
+  expect_lte(dim(sce1)[1] , dim(scVar1)[1])
 
   #non mito genes
   sceNew <- scVar1
   rowData(sceNew)[, "Gene"] <- row.names(scVar1)
   expect_warning(sce1 <- qc_metrics(sceNew, sym_col="Gene", by_nmads=TRUE, thresholds=c(3,3,3), ncores=1, plot=FALSE, write=FALSE,
 		verbose=FALSE))
-  expect_true(dim(sce1)[2] < dim(scVar1)[2])
 
+  expect_lte(dim(sce1)[1] , dim(scVar1)[1])
 })
 

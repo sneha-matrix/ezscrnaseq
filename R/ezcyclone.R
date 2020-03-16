@@ -20,6 +20,7 @@ ezcyclone <- function(sce, organism=c("hsa", "mmu"), gene.names=NULL, pairs=NULL
 
   stopifnot(nrow(pairs$G1) > 0, nrow(pairs$S) > 0, nrow(pairs$G2M) > 0, ncores > 0, iter >= min.iter, min.pairs >0,
 		is.logical(verbose), is.numeric(seed))
+
   if (is.null(gene.names)){
       gene.names=rownames(sce)
    } else {
@@ -36,7 +37,8 @@ ezcyclone <- function(sce, organism=c("hsa", "mmu"), gene.names=NULL, pairs=NULL
 
   suppressMessages(gene.pairs <- reshape2::melt(pairs))
   genes <- union(gene.pairs$first, gene.pairs$second)
-  stopifnot(length(intersect(genes, gene.names)) > 0)
+
+  stopifnot(length(intersect(genes, row.names(sce))) > 0)
 
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
   bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)

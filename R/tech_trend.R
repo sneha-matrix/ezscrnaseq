@@ -1,6 +1,7 @@
 #' Make a technical trend & decompose the gene-level variance
 #'
-#' Make a technical trend using \pkg{scran} \code{makeTechTrend} and decompose the gene-level variance using \pkg{scran} \code{modelGeneVar}.
+#' Make a technical trend using \pkg{scran} \code{makeTechTrend} and decompose the gene-level variance using
+#' \pkg{scran} \code{modelGeneVar}.
 #'
 #' @param assay_type A string specifying which assay values to use, e.g., "counts" or "logcounts".
 #' @inheritParams qc_metrics
@@ -12,6 +13,7 @@
 tech_trend <- function(sce, dispersion=0, assay_type="logcounts", block=NULL, design=NULL, ncores=1, prefix=NULL, plot=TRUE){
 
   stopifnot(ncores > 0, dispersion >=0, is.logical(plot))
+
   # no spike ref: https://github.com/MarioniLab/scran/issues/7
   # according to scran::multiBlockVar(), use logcounts for tech trend
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
@@ -23,6 +25,7 @@ tech_trend <- function(sce, dispersion=0, assay_type="logcounts", block=NULL, de
   var_fit <- scran::fitTrendVar(means=var_tot$mean, vars=var_tot$total)
 
   #decypted function
+
   #var_fit <- trendVar(sce, parametric=FALSE, loess.args=list(span=span), use.spikes=FALSE, assay.type=assay_type)
   #var_out <- decomposeVar(sce, fit=var_fit, block=block, design=design, assay.type=assay_type, BPPARAM=bp)
 
@@ -36,6 +39,7 @@ tech_trend <- function(sce, dispersion=0, assay_type="logcounts", block=NULL, de
     graphics::curve(var_fit_trend, col="dodgerblue", add=TRUE, lwd=2)
     graphics::curve(var_fit$trend(x), col="red", add=TRUE, lwd=2)
     graphics::legend("topright", legend=c("Technical noise", "All variance"), lty=1, lwd=2, col=c("dodgerblue", "red"))
+
   }
 
   return(var_fit_trend)

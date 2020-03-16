@@ -2,7 +2,7 @@
 #'
 #' Calculate deconvolving size factors from cell pools using \pkg{ scran} \code{computeSumFactors}
 #'
-
+#' @param group.col column name of the grouping variable on the samples in colData(sce).
 #' @param max.size Maximum cluster size.
 #' @param seed Random seed.
 #' @param group.col column name of the groups.
@@ -13,6 +13,7 @@
 #' @export
 
 size_factors <- function(sce, min.size=10, max.size=3000, min.mean=0.1, method="igraph", group.col=NULL,
+
   				seed=100, ncores=1, prefix=NULL, plot=TRUE, verbose=TRUE){
 
   #method <- match.arg(method)
@@ -61,12 +62,14 @@ size_factors <- function(sce, min.size=10, max.size=3000, min.mean=0.1, method="
       if(max(cols) > 8) stop("Group number can't be more than 8.")
       graphics::plot(SingleCellExperiment::sizeFactors(sce), sce$sum/1e3, log="xy", ylab="Library size (thousands)",
 			xlab="Size factor", main="Size factors from deconvolution",
+
 			col=scales::alpha(grDevices::palette()[cols], 0.3), pch=16)
       legd <- sort(unique(SingleCellExperiment::colData(sce)[, group.col]))
       graphics::legend("topleft", col=2:(length(legd)+1), pch=16, cex=1.2, legend=legd)
     } else {
       graphics::plot(SingleCellExperiment::sizeFactors(sce), sce$sum/1e3, log="xy", ylab="Library size (thousands)",
 			xlab="Size factor", main="Size factors from deconvolution",
+
 			col= scales::alpha(grDevices::palette()[1], 0.3), pch=16)
     }
   }

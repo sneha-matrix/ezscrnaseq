@@ -50,6 +50,7 @@ qc_metrics <- function(sce, sym_col="symbol", by_nmads=TRUE, thresholds=c(3,3,3)
     libsize.drop <- stats$sum < thresholds[1]
     feature.drop <- stats$detected < thresholds[2]
     if (n_mito > 0) mito.drop <- stats$subsets_Mt_percent > thresholds[3]
+
   }
 
   # qc tab
@@ -62,6 +63,7 @@ qc_metrics <- function(sce, sym_col="symbol", by_nmads=TRUE, thresholds=c(3,3,3)
                         Mito=min(stats$subsets_Mt_percent[mito.drop]))
 
   } else{
+
     qc <- data.frame(ByLibSize=sum(libsize.drop), ByFeature=sum(feature.drop), ByMito=0,
                      Remaining=sum(!(libsize.drop | feature.drop)))
     cutoff <- data.frame(LibSize=max(stats$sum[libsize.drop]), Feature=max(stats$detected[feature.drop]))
@@ -97,6 +99,7 @@ qc_metrics <- function(sce, sym_col="symbol", by_nmads=TRUE, thresholds=c(3,3,3)
     if (n_mito >0){
       graphics::hist(stats$subsets_Mt_percent, xlab="Mitochondrial proportion (%)", main="", breaks=30, col="grey80",  ylab="Number of cells")
       graphics::abline(v=cutoff$Mito[1], lty=2, col="red")
+
     }
     Hmisc::mtitle("Histograms of QC Metrics", cex.m=1.2)
   }
@@ -107,6 +110,7 @@ qc_metrics <- function(sce, sym_col="symbol", by_nmads=TRUE, thresholds=c(3,3,3)
     keep <- !(libsize.drop | feature.drop)
   }
 
-  sce <- sce[, keep]
+
+  sce <- sce[keep,, drop=FALSE]
   return(sce)
 }

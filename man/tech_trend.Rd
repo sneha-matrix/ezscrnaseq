@@ -32,8 +32,13 @@ If specified, variance modelling is performed separately within each block and s
 
 \item{prefix}{Prefix for file name for the QC metrics histograms.}
 
-\item{plot}{TRUE/FASLE for whether plot the QC metrics histograms.}
+\item{plot}{TRUE/FALSE for whether to plot the QC metrics histograms.}
+}
+
+\value{
+A function accepting a mean log-expression as input and returning the variance of the log-expression as the output.
 }
 \description{
-Make a technical trend using \pkg{scran} \code{makeTechTrend} and decompose the gene-level variance using \pkg{scran} \code{modelGeneVar}.
+Make a technical trend using \pkg{scran} \code{makeTechTrend} and decompose the gene-level variance using
+\pkg{scran} \code{modelGeneVar}.
 }

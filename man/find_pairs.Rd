@@ -15,7 +15,8 @@ find_pairs(sce, G1, S, G2M, genes = NULL)
 
 \item{G2M}{Vector of column indices of G2M genes.}
 
-\item{genes}{Ensembl gene IDs for genes in \code{sce}. If \code{genes} are set to NULL , genes will be taken from \code{sce} .}
+\item{genes}{Ensembl gene IDs for genes in \code{sce}. If \code{genes} are set to \code{NULL} , genes will be taken
+from \code{sce} .}
 }
 \value{
 A list containing training gene pairs for \code{G1}, \code{S}, and \code{G2M} phase.
@@ -28,5 +29,5 @@ Genes in all three phases are required.
 
 Minimum 1000 genes should overlap between \code{sce} and \code{genes}.
 
-Function throws error if no pairs are found
+Function throws error if no pairs are found.
 }

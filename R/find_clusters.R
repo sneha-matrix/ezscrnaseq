@@ -1,6 +1,6 @@
 #' Find cell clusters
 #'
-#' Find cell clusterd using \pkg{igraph}.
+#' Find cell clusters using \pkg{igraph}.
 #'
 #' @param use_dimred A string specifying whether existing values in \code{reducedDims(sce)} should be used.
 #' @param seed Random seed.
@@ -19,7 +19,7 @@ find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, m
                           spins=25, min_member=20, prefix=NULL, plot=TRUE, verbose=TRUE){
 
   method <- match.arg(method)
-  stopifnot(is.logical(verbose), is.logical(plot), ncores > 0, is.numeric(seed), snn_k > 1, steps > 1, spins > 1 , min_member >1)
+  stopifnot(is.logical(verbose), is.logical(plot), ncores > 0, is.numeric(seed), snn_k > 1, steps > 1, spins > 1 , min_member > 1)
 
   suppressWarnings(set.seed(seed = seed, sample.kind = "Rounding"))
 
@@ -46,7 +46,6 @@ find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, m
     print(knitr::kable(nc))
   }
 
-
   # modularity score
   ms <- igraph::modularity(cluster_out)
   if (verbose) message("\nModularity score: ", ms, "\n")
@@ -67,7 +66,7 @@ find_clusters <- function(sce, use_dimred="PCA", seed=100, snn_k=10, ncores=1, m
   num_small <- sum(nc < min_member)
   if(num_small > 0){
     if (verbose) message("\nRemoving ", num_small, " clusters that have cells less than ", min_member, "\n")
-    sce <- sce[, sce$Cluster %in% names(nc)[nc >=min_member]]
+    sce <- sce[, sce$Cluster %in% names(nc)[nc >= min_member], drop=FALSE]
     sce$Cluster <- droplevels(sce$Cluster)
   }
 

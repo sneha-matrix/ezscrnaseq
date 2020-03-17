@@ -12,7 +12,7 @@ test_that("ncore=1 vs ncore=2", {
 })
 
 test_that("default vs user input", {
-  #ncore1 vs user  provided ncore1
+  #ncore1 vs user provided ncore1
   assignments <- ezcyclone(sce, organism="hsa", min.pairs=5, verbose=FALSE, iter=100, min.iter=10)
   assignments2 <- ezcyclone(sce, organism="hsa", ncores=1, min.pairs=5, verbose=FALSE, iter=100, min.iter=10)
   expect_equal(assignments$phases, assignments2$phases)

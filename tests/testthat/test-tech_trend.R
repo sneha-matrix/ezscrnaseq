@@ -17,6 +17,7 @@ test_that("default", {
   #test for ncores
   trend1 <- tech_trend(sce2, ncores=1, plot=FALSE)
   trend2 <- tech_trend(sce2, ncores=2, plot=FALSE)
+
   expect_equal(trend1, trend2)
   # test for default dispersion
   trend1 <- tech_trend(sce2, ncores=1, plot=FALSE)
@@ -25,10 +26,11 @@ test_that("default", {
   # test for assay_type
   trend1 <- tech_trend(sce2, dispersion=0, ncores=1, plot=FALSE)
   trend2 <- tech_trend(sce2, dispersion=0, assay_type="logcounts", ncores=1, plot=FALSE)
-  expect_equal(trend1, trend2)
+  expect_equal(trend1, trend2 )
+
   # test for size.factors
   trend1 <- tech_trend(sce2, dispersion=0, assay_type="logcounts", ncores=1, plot=FALSE)
-  trend2 <- tech_trend(sce2, dispersion=0, size.factors=1, assay_type="logcounts", ncores=1, plot=FALSE)
+  trend2 <- tech_trend(sce2, dispersion=0, assay_type="logcounts", ncores=1, plot=FALSE)
   expect_equal(trend1, trend2)
   #negative test
   expect_error(tech_trend(sce2, dispersion=0, size.factors=1, assay_type="logcounts", ncores=1, plot=1))
@@ -36,7 +38,6 @@ test_that("default", {
   expect_error(tech_trend(sce2, dispersion=0, size.factors=-1))
   expect_error(tech_trend(sce2, dispersion=-1))
 })
-
 
 test_that("truth table", {
  sc <- matrix(sample(0:200, 2000, replace=TRUE), nrow = 200, ncol = 10)

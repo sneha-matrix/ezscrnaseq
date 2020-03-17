@@ -31,7 +31,8 @@ Only used when \code{use.ranks=TRUE}, see \code{?\link[scran]{scaledColRanks}} f
 \item{method}{String specifying the clustering method to use.
 \code{"hclust"} uses hierarchical clustering while \code{"igraph"} uses graph-based clustering.}
 
-\item{group.col}{column name of the grouping variable on the samples in colData(sce).}
+\item{group.col}{column name of the groups.}
+
 
 \item{seed}{Random seed.}
 
@@ -39,9 +40,9 @@ Only used when \code{use.ranks=TRUE}, see \code{?\link[scran]{scaledColRanks}} f
 
 \item{prefix}{Prefix for file name for the QC metrics histograms.}
 
-\item{plot}{TRUE/FASLE for whether plot the QC metrics histograms.}
+\item{plot}{TRUE/FALSE for whether to plot the QC metrics histograms.}
 
-\item{verbose}{TRUE/FASLE for specifying whether diagnostics should be printed to screen.}
+\item{verbose}{TRUE/FALSE for specifying if diagnostics should be printed to screen.}
 }
 \value{
 A SingleCellExperiment object with size factors.

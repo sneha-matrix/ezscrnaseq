@@ -13,7 +13,7 @@ find_markers(
   test.type = c("t", "wilcox", "binom"),
   direction = c("up", "down"),
   pval.type = c("any", "all"),
-  assay_type = c("logcounts", "counts"),
+  assay_type = c("logcounts", "counts", "corrected"),
   ncores = 1,
   fdr_cutoff = 0.25,
   prefix = NULL,
@@ -47,7 +47,7 @@ or a binomial test with \code{"binom"}.}
 
 \item{prefix}{Prefix for file name for the QC metrics histograms.}
 
-\item{write}{TRUE/FASLE for whether write the table of filtered cells.}
+\item{write}{TRUE/FALSE for whether to write the table of filtered cells.}
 }
 \value{
 A data.frame for the statistics and annotation of top marker geness

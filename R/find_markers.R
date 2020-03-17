@@ -15,8 +15,8 @@
 #' @export
 
 find_markers <- function(sce, clusters, annot, block=NULL, lfc=1,  test.type=c("t", "wilcox", "binom"),
-                          direction=c("up", "down"),  pval.type=c("any", "all"), assay_type=c("logcounts", "counts"), 
-						  ncores=1, fdr_cutoff=0.25, prefix=NULL, write=TRUE){
+                          direction=c("up", "down"),  pval.type=c("any", "all"), assay_type=c("logcounts", "counts", "corrected"),
+						              ncores=1, fdr_cutoff=0.25, prefix=NULL, write=TRUE){
 
   direction <- match.arg(direction)
   test.type <- match.arg(test.type)
@@ -26,18 +26,18 @@ find_markers <- function(sce, clusters, annot, block=NULL, lfc=1,  test.type=c("
 
   cl_type <- ifelse(.Platform$OS.type=="windows", "SOCK", "FORK")
   bp <- BiocParallel::SnowParam(workers=ncores, type=cl_type)
-  BiocParallel::register(bpstart(bp))
-  markers <- scran::findMarkers(sce, groups=clusters, block=block, pval.type=pval.type, lfc=lfc, 
+  BiocParallel::register(BiocParallel::bpstart(bp))
+  markers <- scran::findMarkers(sce, groups=clusters, block=block, pval.type=pval.type, lfc=lfc,
                          test.type=test.type, direction=direction, assay.type=assay_type, BPPARAM=bp)
   BiocParallel::bpstop(bp)
 
   clus <- names(markers)
   if (pval.type=="any"){
-    marker_sets <- lapply(seq_along(markers), function(i) tryCatch(data.frame(markers[[i]][markers[[i]][,3] < 
+    marker_sets <- lapply(seq_along(markers), function(i) tryCatch(data.frame(markers[[i]][markers[[i]][,3] <
 			      fdr_cutoff, 1:3], Cluster=clus[i]), error=function(e) NULL))
     suffix <- "simes"
   } else if(pval.type=="all"){
-    marker_sets <- lapply(seq_along(markers), function(i) tryCatch(data.frame(markers[[i]][markers[[i]][,2] < 
+    marker_sets <- lapply(seq_along(markers), function(i) tryCatch(data.frame(markers[[i]][markers[[i]][,2] <
 			     fdr_cutoff, 1:2], Cluster=clus[i]), error=function(e) NULL))
     suffix <- "iut"
   }

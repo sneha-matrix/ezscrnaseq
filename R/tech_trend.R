@@ -7,7 +7,7 @@
 #' @inheritParams qc_metrics
 #' @inheritParams scran::makeTechTrend
 #' @inheritParams scran::modelGeneVar
-#' #' @return A function accepting a mean log-expression as input and returning the variance of the log-expression as the output
+#' @return A function accepting a mean log-expression as input and returning the variance of the log-expression as the output
 #' @export
 
 tech_trend <- function(sce, dispersion=0, assay_type="logcounts", block=NULL, design=NULL, ncores=1, prefix=NULL, plot=TRUE){
@@ -24,8 +24,7 @@ tech_trend <- function(sce, dispersion=0, assay_type="logcounts", block=NULL, de
   var_tot <- scran::modelGeneVar(sce, assay.type=assay_type, block=block, design=design)
   var_fit <- scran::fitTrendVar(means=var_tot$mean, vars=var_tot$total)
 
-  #decypted function
-
+  #deprecated function
   #var_fit <- trendVar(sce, parametric=FALSE, loess.args=list(span=span), use.spikes=FALSE, assay.type=assay_type)
   #var_out <- decomposeVar(sce, fit=var_fit, block=block, design=design, assay.type=assay_type, BPPARAM=bp)
 
@@ -39,8 +38,6 @@ tech_trend <- function(sce, dispersion=0, assay_type="logcounts", block=NULL, de
     graphics::curve(var_fit_trend, col="dodgerblue", add=TRUE, lwd=2)
     graphics::curve(var_fit$trend(x), col="red", add=TRUE, lwd=2)
     graphics::legend("topright", legend=c("Technical noise", "All variance"), lty=1, lwd=2, col=c("dodgerblue", "red"))
-
   }
-
   return(var_fit_trend)
 }

@@ -50,7 +50,6 @@ qc_metrics <- function(sce, sym_col="symbol", by_nmads=TRUE, thresholds=c(3,3,3)
     libsize.drop <- stats$sum < thresholds[1]
     feature.drop <- stats$detected < thresholds[2]
     if (n_mito > 0) mito.drop <- stats$subsets_Mt_percent > thresholds[3]
-
   }
 
   # qc tab
@@ -61,9 +60,7 @@ qc_metrics <- function(sce, sym_col="symbol", by_nmads=TRUE, thresholds=c(3,3,3)
     #                    Mito=min(sce$pct_counts_Mt[mito.drop]))
     cutoff <- data.frame(LibSize=max(stats$sum[libsize.drop]), Feature=max(stats$detected[feature.drop]),
                         Mito=min(stats$subsets_Mt_percent[mito.drop]))
-
-  } else{
-
+  } else {
     qc <- data.frame(ByLibSize=sum(libsize.drop), ByFeature=sum(feature.drop), ByMito=0,
                      Remaining=sum(!(libsize.drop | feature.drop)))
     cutoff <- data.frame(LibSize=max(stats$sum[libsize.drop]), Feature=max(stats$detected[feature.drop]))
@@ -83,8 +80,7 @@ qc_metrics <- function(sce, sym_col="symbol", by_nmads=TRUE, thresholds=c(3,3,3)
     if (n_mito > 0){
       grDevices::pdf(paste(c(prefix,"qc_metrics_hist.pdf"), collapse="_"), 9, 3)
       graphics::par(mfrow=c(1,3), mar=c(5.1, 4.1, 1.1, 0.1), oma=c(0, 0, 2, 0))
-
-    } else{
+    } else {
       grDevices::pdf(paste(c(prefix,"qc_metrics_hist.pdf"), collapse="_"), 6, 3)
       graphics::par(mfrow=c(1,2), mar=c(5.1, 4.1, 1.1, 0.1), oma=c(0, 0, 2, 0))
     }
@@ -96,10 +92,10 @@ qc_metrics <- function(sce, sym_col="symbol", by_nmads=TRUE, thresholds=c(3,3,3)
     graphics::hist(stats$detected, xlab="Number of expressed genes", main="", breaks=30, col="grey80", ylab="Number of cells")
     graphics::abline(v=cutoff$Feature[1], lty=2, col="red")
 
-    if (n_mito >0){
-      graphics::hist(stats$subsets_Mt_percent, xlab="Mitochondrial proportion (%)", main="", breaks=30, col="grey80",  ylab="Number of cells")
+    if (n_mito > 0){
+      graphics::hist(stats$subsets_Mt_percent, xlab="Mitochondrial proportion (%)", main="", breaks=30, col="grey80",
+                     ylab="Number of cells")
       graphics::abline(v=cutoff$Mito[1], lty=2, col="red")
-
     }
     Hmisc::mtitle("Histograms of QC Metrics", cex.m=1.2)
   }
@@ -109,7 +105,6 @@ qc_metrics <- function(sce, sym_col="symbol", by_nmads=TRUE, thresholds=c(3,3,3)
   } else{
     keep <- !(libsize.drop | feature.drop)
   }
-
 
   sce <- sce[keep,, drop=FALSE]
   return(sce)

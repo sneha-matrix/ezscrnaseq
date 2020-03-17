@@ -15,7 +15,7 @@ test_that("tests", {
   expect_error(find_pairs(sce2, G1=G1, S=S, G2M=G2M))
 
   #test for empty pairs
-  sce3 <- rbind(rep(head(sce),times=200))
+  sce3 <- rbind(rep(head(sce), times=200))
   expect_error(find_pairs(sce3, G1=G1, S=S, G2M=G2M))
 })
 

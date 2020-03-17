@@ -55,8 +55,7 @@ test_that("truth table", {
 
   rowDataSc<-rowData(sce)
   itr <- round(runif(1) * 100)
-  for(n in 1:itr)
-  {
+  for(n in 1:itr){
     i <- sample(1:200, 1, replace=T) # row number
     j <- sample(1:10, 1, replace=T) #col number
     sc[i,j] <- 0
